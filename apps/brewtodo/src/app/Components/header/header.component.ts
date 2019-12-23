@@ -8,7 +8,7 @@ import { AuthService } from '../../auth/auth.service';
 })
 export class HeaderComponent implements OnInit {
 
-  title = 'Food menu';
+  title = 'Breweries';
 
   constructor(private authService: AuthService) {
   }

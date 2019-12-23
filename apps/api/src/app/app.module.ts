@@ -2,16 +2,14 @@ import { Module, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import {BreweriesController} from './breweries/breweries.controller';
-import { BreweriesService } from './breweries/breweries.service';
 import { AuthenticationMiddleware } from '../common/authentication.middleware';
-import { ConfigModule } from '@nestjs/config';
-import database from '../config/database.config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { BreweriesModule } from './breweries/breweries.module';
 
 @Module({
-  imports: [ConfigModule.forRoot( {isGlobal: true, load: [database]})],
-  controllers: [AppController, BreweriesController],
-  providers: [AppService, BreweriesService]
+  imports: [TypeOrmModule.forRoot(), BreweriesModule],
+  controllers: [AppController],
+  providers: [AppService]
 })
 export class AppModule {
   public configure(consumer: MiddlewareConsumer) {
