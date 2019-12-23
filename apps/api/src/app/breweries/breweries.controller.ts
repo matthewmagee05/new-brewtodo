@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, UsePipes, UseGuards } from '@nestjs/common';
 import { BreweriesService } from './breweries.service';
-import { Brewery } from './brewery.interface';
+import { Brewery } from '@brewtodo/api-interfaces';
 import { ValidationPipe } from '../../common/validation.pipe';
 import { CreateBreweryDto } from './create-brewery.dto';
 import { AdminGuard } from '../../common/admin.guard';

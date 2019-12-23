@@ -199,6 +199,31 @@
           }
         }
       }
+    },
+    "brewery": {
+      "root": "libs/brewery",
+      "sourceRoot": "libs/brewery/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/brewery/tsconfig.lib.json",
+              "libs/brewery/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/brewery/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/brewery/jest.config.js",
+            "tsConfig": "libs/brewery/tsconfig.spec.json"
+          }
+        }
+      }
     }
   },
   "cli": {

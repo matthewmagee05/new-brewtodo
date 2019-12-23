@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Message } from '@brewtodo/api-interfaces';
+import { Component } from '@angular/core';  
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'brewtodo-root',
@@ -8,6 +7,7 @@ import { Message } from '@brewtodo/api-interfaces';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  hello$ = this.http.get<Message>('/api/hello');
-  constructor(private http: HttpClient) {}
+  constructor(private authService: AuthService) {
+    this.authService.checkSession();
+  }
 }

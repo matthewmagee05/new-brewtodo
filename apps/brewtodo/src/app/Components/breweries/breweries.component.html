@@ -1,0 +1,53 @@
+<table class="table">
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Description</td>
+        <td>Action</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let brewery of breweries"> <!--for every item in object items, create a table row-->
+        <td>{{brewery.name }}</td> <!--Write it's name in a column--> 
+        <td>{{brewery.description}}</td> <!--Write it's price in a column--> 
+        <td>
+        <button class="btn btn-secondary"
+                (click)="addToCart()"
+                [disabled]="!isAuthenticated()">
+                Add to shopping cart
+        </button>
+        </td>
+      </tr> 
+    </tbody>
+  </table>
+<div>
+    <div *ngIf="isAdmin()">
+    <h3 class="col-md-12">Add a new Item</h3>
+    <form class="form-inline" (submit)="addNewBrewery()" [formGroup]="breweryForm">
+      <div class="col-auto">
+        <input type="text" 
+          class="form-control" 
+          placeholder="Name" 
+          formControlName="name" 
+          [ngClass]="{ 'is-invalid': brewerySubmitted && getBreweryForm.name.errors }" >
+          <div *ngIf="brewerySubmitted && getBreweryForm.name.errors" class="invalid-feedback">
+            <div *ngIf="getBreweryForm.name.errors.required">Name is required</div>
+          </div>
+      </div>
+      <div class="col-auto">
+        <input type="text" 
+          class="form-control" 
+          placeholder="description" 
+          formControlName="description" 
+          [ngClass]="{ 'is-invalid': brewerySubmitted && getBreweryForm.description.errors }" >
+          <div *ngIf="brewerySubmitted && getBreweryForm.description.errors" class="invalid-feedback">
+            <div *ngIf="getBreweryForm.description.errors.required">description is required and must be a number</div>
+            <div *ngIf="getBreweryForm.description.errors.min">Must start from 0</div>
+          </div>
+      </div>
+      <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-2">Add new Brewery</button>
+      </div>
+    </form>
+    </div>
+  </div>
