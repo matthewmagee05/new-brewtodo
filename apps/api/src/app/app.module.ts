@@ -5,9 +5,11 @@ import { AppService } from './app.service';
 import {BreweriesController} from './breweries/breweries.controller';
 import { BreweriesService } from './breweries/breweries.service';
 import { AuthenticationMiddleware } from '../common/authentication.middleware';
+import { ConfigModule } from '@nestjs/config';
+import database from '../config/database.config';
 
 @Module({
-  imports: [],
+  imports: [ConfigModule.forRoot( {isGlobal: true, load: [database]})],
   controllers: [AppController, BreweriesController],
   providers: [AppService, BreweriesService]
 })
