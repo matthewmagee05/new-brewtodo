@@ -8,5 +8,4 @@ export class BeerType {
 
     @Column({ length: 255 })
     name:string;
-
 }

@@ -2,6 +2,7 @@ import { createConnection } from 'typeorm';
 import { Breweries } from '../app/breweries/breweries.entity';
 import { States } from '../app/states/state.entity';
 import { BeerType } from '../app/beer-types/beer-types.entities';
+import { Beer } from '../app/beer/beer.entity';
 
 export const databaseProviders = [
   {
@@ -15,7 +16,8 @@ export const databaseProviders = [
       entities: [
        Breweries,
        States,
-       BeerType
+       BeerType,
+       Beer
       ],
       database: process.env.TYPEORM_DATABASE
     }),

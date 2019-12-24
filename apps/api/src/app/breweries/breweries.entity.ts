@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany, ManyToOne, JoinTable } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany, ManyToOne, JoinTable, ManyToMany } from 'typeorm';
 import {State} from '@brewtodo/api-interfaces';
 import { States } from '../states/state.entity';
+import { Beer } from '../beer/beer.entity';
 
 @Entity()
 export class Breweries {
@@ -28,6 +29,11 @@ export class Breweries {
     @JoinTable()
     state: States;
 
+    @OneToMany(type => Beer, beer => beer.breweryId)
+    @JoinTable()
+    beer: Beer[];
+
+
     @Column({ length: 255 })
     phoneNumber:string;
 
@@ -45,5 +51,7 @@ export class Breweries {
 
     @Column()
     hasFood:boolean;
+
+  
 
 }

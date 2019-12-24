@@ -7,9 +7,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { BreweriesModule } from './breweries/breweries.module';
 import { StatesModule } from './states/states.module';
 import { BeerTypesModule } from './beer-types/beer-types.module';
+import { BeerModule } from './beer/beer.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), BreweriesModule, StatesModule, BeerTypesModule],
+  imports: [TypeOrmModule.forRoot(), BreweriesModule, StatesModule, BeerTypesModule, BeerModule],
   controllers: [AppController],
   providers: [AppService]
 })
