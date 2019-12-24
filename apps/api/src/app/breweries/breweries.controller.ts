@@ -1,30 +1,29 @@
 import { Controller, Get, Post, Body, UsePipes, UseGuards, Delete } from '@nestjs/common';
 import { BreweriesService } from './breweries.service';
-import { Brewery } from '@brewtodo/api-interfaces';
 import { ValidationPipe } from '../../common/validation.pipe';
-import { CreateBreweryDto } from './create-brewery.dto';
 import { AdminGuard } from '../../common/admin.guard';
+import { Breweries } from './breweries.entity';
 
 @Controller('breweries')
 export class BreweriesController {
     constructor(private readonly breweryService: BreweriesService) {}
     @Get()
-    async findAll(): Promise<Brewery[]> {
+    async findAll(): Promise<Breweries[]> {
         return this.breweryService.findAll();
     }
   
     @Post()
     @UseGuards(new AdminGuard())
     @UsePipes(new ValidationPipe())
-    async create(@Body() createBreweryDto: CreateBreweryDto) {
-        this.breweryService.createBrewery(createBreweryDto);
+    async create(@Body() brewery: Breweries) {
+        this.breweryService.createBrewery(brewery);
     }
 
     @Delete()
     @UseGuards(new AdminGuard())
     @UsePipes(new ValidationPipe())
-    async delete(@Body() createBreweryDto: CreateBreweryDto){
-        this.breweryService.deleteBrewery(createBreweryDto);
+    async delete(@Body() brewery: Breweries){
+        this.breweryService.deleteBrewery(brewery);
     }
 }
 

@@ -5,9 +5,11 @@ import { AppService } from './app.service';
 import { AuthenticationMiddleware } from '../common/authentication.middleware';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BreweriesModule } from './breweries/breweries.module';
+import { StatesModule } from './states/states.module';
+import { BeerTypesModule } from './beer-types/beer-types.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), BreweriesModule],
+  imports: [TypeOrmModule.forRoot(), BreweriesModule, StatesModule, BeerTypesModule],
   controllers: [AppController],
   providers: [AppService]
 })

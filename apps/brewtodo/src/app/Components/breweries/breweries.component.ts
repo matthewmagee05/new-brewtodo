@@ -23,7 +23,18 @@ export class BreweriesComponent implements OnInit {
 
     this.breweryForm = this.formBuilder.group({
       name: ['', Validators.required],
-      description: ['', Validators.required]
+      description: ['', Validators.required],
+      imageURL: [''],
+      address: ['', Validators.required],
+      zipCode: ['', Validators.required],
+      state: ['', Validators.required],
+      phoneNumber: [''],
+      businessHours: [''],
+      hasTShirt: ['', Validators.required],
+      hasMug: ['', Validators.required],
+      hasGrowler: ['', Validators.required],
+      hasFood: ['', Validators.required],
+
     });
   }
 
