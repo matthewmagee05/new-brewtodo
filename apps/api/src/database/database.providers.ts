@@ -3,6 +3,7 @@ import { Breweries } from '../app/breweries/breweries.entity';
 import { States } from '../app/states/state.entity';
 import { BeerType } from '../app/beer-types/beer-types.entities';
 import { Beer } from '../app/beer/beer.entity';
+import { User } from '../app/user/user.entity';
 
 export const databaseProviders = [
   {
@@ -17,7 +18,8 @@ export const databaseProviders = [
        Breweries,
        States,
        BeerType,
-       Beer
+       Beer,
+       User
       ],
       database: process.env.TYPEORM_DATABASE
     }),

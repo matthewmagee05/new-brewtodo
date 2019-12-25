@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
+import { UserService } from '../../Services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -9,12 +10,12 @@ import { AuthService } from '../../auth/auth.service';
 export class HeaderComponent implements OnInit {
 
   title = 'Breweries';
+  hasNotCheckedUser = true;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private userService: UserService) {
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   isAuthenticated() {
     return this.authService.isAuthenticated();
@@ -29,6 +30,16 @@ export class HeaderComponent implements OnInit {
   }
 
   getProfile() {
-    return this.authService.getProfile();
+    const user =  this.authService.getProfile();
+    if(user && this.hasNotCheckedUser === true){
+      this.authService.upsertUser(user.name);
+      this.hasNotCheckedUser = false
+    }
+    return user;
   }
+
+  checkIfUserExists(){
+
+  }
+  
 }

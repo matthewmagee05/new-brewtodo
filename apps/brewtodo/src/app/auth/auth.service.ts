@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AuthOptions, WebAuth } from 'auth0-js';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { UserService } from '../Services/user.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,15 @@ export class AuthService {
   private _idToken: string;
   private _properties: AuthOptions;
 
-  constructor() {
+
+  // creates header
+  private _authHeader(): Object {
+    return {
+      headers: new HttpHeaders({ 'authorization': `Bearer ${this.getAccessToken()}`})
+    };
+  }
+
+  constructor(private http: HttpClient) {
     this._properties = {
       clientID: 'dbCc31cUkkfrF3vxLwRgP1ddtEWaX7C7',
       domain: 'brewtodo.auth0.com',
@@ -86,7 +96,7 @@ export class AuthService {
     }
   }
 
-  public getProfile(): Object {
+  public getProfile(): any {
     if (this._idToken) {
       const helper = new JwtHelperService();
       return helper.decodeToken(this._idToken);
@@ -106,4 +116,15 @@ export class AuthService {
     })
     
   }
+
+  public upsertUser(username: string): void{
+    const body = {
+      username
+    }
+    const userUpdate = this.http.post<boolean>('/api/user', body, this._authHeader()).subscribe(
+      res => userUpdate.unsubscribe()
+    );
+  }
+
+  
 }
