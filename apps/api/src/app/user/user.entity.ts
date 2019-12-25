@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany, JoinTable } from 'typeorm';
+import { Review } from '../review/review.entity';
 
 @Entity()
 export class User {
@@ -18,5 +19,8 @@ export class User {
     @Column({ length: 255 })
     profile_image_url:string;
 
+    @OneToMany(type => Review, review => review.user)
+    @JoinTable()
+    review: Review[];
     
 }

@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany
 import {State} from '@brewtodo/api-interfaces';
 import { States } from '../states/state.entity';
 import { Beer } from '../beer/beer.entity';
+import { Review } from '../review/review.entity';
 
 @Entity()
 export class Breweries {
@@ -32,6 +33,10 @@ export class Breweries {
     @OneToMany(type => Beer, beer => beer.breweryId)
     @JoinTable()
     beer: Beer[];
+
+    @OneToMany(type => Review, review => review.breweryId)
+    @JoinTable()
+    review: Review[];
 
 
     @Column({ length: 255 })

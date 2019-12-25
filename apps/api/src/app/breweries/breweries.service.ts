@@ -9,7 +9,8 @@ export class BreweriesService {
   constructor(@Inject(constants.breweryRepository) private breweryRepository: Repository<Breweries>){}
 
   async findAll(): Promise<Breweries[]> {
-    return await this.breweryRepository.find({relations: [ 'state','beer' ]})
+    return await this.breweryRepository.find({relations: [ 'state','beer','review', 'review.user' ]}
+    )
   }
 
   async createBrewery(brewery: Breweries) {
