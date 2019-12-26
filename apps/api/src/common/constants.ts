@@ -4,5 +4,6 @@ export const constants = {
     beerTypesRepository: 'BEERTYPES_REPOSITORY',
     beerRepository: 'BEER_REPOSITORY',
     userRepository: 'USER_REPOSITORY',
-    reviewRepository: 'REVIEW_REPOSITORY'
+    reviewRepository: 'REVIEW_REPOSITORY',
+    userBeerRepository: 'USERBEER_REPOSITORY'
 }

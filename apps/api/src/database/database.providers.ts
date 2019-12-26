@@ -5,6 +5,7 @@ import { BeerType } from '../app/beer-types/beer-types.entities';
 import { Beer } from '../app/beer/beer.entity';
 import { User } from '../app/user/user.entity';
 import { Review } from '../app/review/review.entity';
+import { UserBeers } from '../app/user-beer/user-beer.entity';
 
 export const databaseProviders = [
   {
@@ -15,13 +16,15 @@ export const databaseProviders = [
       port: 3306,
       username: process.env.TYPEORM_USERNAME,
       password: process.env.TYPEORM_PASSWORD,
+      logging: true,
       entities: [
        Breweries,
        States,
        BeerType,
        Beer,
        User,
-       Review
+       Review,
+       UserBeers
       ],
       database: process.env.TYPEORM_DATABASE
     }),

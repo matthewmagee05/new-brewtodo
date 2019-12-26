@@ -10,9 +10,10 @@ import { BeerTypesModule } from './beer-types/beer-types.module';
 import { BeerModule } from './beer/beer.module';
 import { UserModule } from './user/user.module';
 import { ReviewModule } from './review/review.module';
+import { UserBeerModule } from './user-beer/user-beer.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), BreweriesModule, StatesModule, BeerTypesModule, BeerModule, UserModule, ReviewModule],
+  imports: [TypeOrmModule.forRoot(), BreweriesModule, StatesModule, BeerTypesModule, BeerModule, UserModule, ReviewModule, UserBeerModule],
   controllers: [AppController],
   providers: [AppService]
 })

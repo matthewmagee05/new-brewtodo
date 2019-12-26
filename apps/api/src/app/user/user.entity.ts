@@ -1,5 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany, JoinTable } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany, JoinTable, ManyToOne, ManyToMany } from 'typeorm';
 import { Review } from '../review/review.entity';
+import { UserBeers } from '../user-beer/user-beer.entity';
+import { Beer } from '../beer/beer.entity';
 
 @Entity()
 export class User {
@@ -23,4 +25,5 @@ export class User {
     @JoinTable()
     review: Review[];
     
+    userBeer: UserBeers;
 }

@@ -1,6 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany, ManyToMany, ManyToOne, JoinTable } from 'typeorm';
 import { BeerType } from '../beer-types/beer-types.entities';
 import { Breweries } from '../breweries/breweries.entity';
+import { UserBeers } from '../user-beer/user-beer.entity';
+import { User } from '../user/user.entity';
+import { Brewery } from '@brewtodo/api-interfaces';
 
 @Entity()
 export class Beer {
@@ -25,4 +28,5 @@ export class Beer {
     @JoinColumn({name: 'breweryId', referencedColumnName: 'id'})
     breweryId: number;
 
+    brewery: Brewery;
 }
