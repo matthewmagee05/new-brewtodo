@@ -6,6 +6,7 @@ import {UserProfile} from '@brewtodo/api-interfaces';
 import { UserBeers } from '../user-beer/user-beer.entity';
 import { Beer } from '../beer/beer.entity';
 import { Breweries } from '../breweries/breweries.entity';
+import { UserPurchasedItems } from '../user-purchased-items/user-purchased-item.entity';
 
 @Injectable()
 export class UserService {
@@ -15,10 +16,11 @@ export class UserService {
     const foundUser = await this.userRepository.createQueryBuilder('user')
     .leftJoinAndMapMany('user.userBeer', UserBeers, 'userBeer', 'user.id = userBeer.userId')
     .leftJoinAndMapMany('userBeer.beer', Beer, 'beer', 'beer.id = userBeer.beerId')
+    .leftJoinAndMapMany('user.userPurchasedItem', UserPurchasedItems, 'userPurchasedItem', 'user.id = userPurchasedItem.user')
     .leftJoinAndMapOne('beer.brewery', Breweries, 'brewery', 'brewery.id = beer.breweryId')
     .where(`user.username = :username`, { username: username })
     .getOne();
-    
+
       if(!foundUser){
         const user = new UserProfile(username);
         const savedUser = await this.userRepository.save(user);

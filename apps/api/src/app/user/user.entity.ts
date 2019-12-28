@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany
 import { Review } from '../review/review.entity';
 import { UserBeers } from '../user-beer/user-beer.entity';
 import { Beer } from '../beer/beer.entity';
+import { UserPurchasedItems } from '../user-purchased-items/user-purchased-item.entity';
 
 @Entity()
 export class User {
@@ -26,4 +27,6 @@ export class User {
     review: Review[];
     
     userBeer: UserBeers;
+
+    userPurchasedItem: UserPurchasedItems;
 }

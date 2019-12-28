@@ -11,9 +11,10 @@ import { BeerModule } from './beer/beer.module';
 import { UserModule } from './user/user.module';
 import { ReviewModule } from './review/review.module';
 import { UserBeerModule } from './user-beer/user-beer.module';
+import { UserPurchasedItemsModule } from './user-purchased-items/user-purchased-items.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), BreweriesModule, StatesModule, BeerTypesModule, BeerModule, UserModule, ReviewModule, UserBeerModule],
+  imports: [TypeOrmModule.forRoot(), BreweriesModule, StatesModule, BeerTypesModule, BeerModule, UserModule, ReviewModule, UserBeerModule, UserPurchasedItemsModule],
   controllers: [AppController],
   providers: [AppService]
 })
