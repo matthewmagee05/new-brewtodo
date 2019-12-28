@@ -1,163 +1,114 @@
-<table class="table">
-    <thead>
-      <tr>
-        <td>Name</td>
-        <td>Description</td>
-        <td>Action</td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let brewery of breweries"> <!--for every item in object items, create a table row-->
-        <td>{{brewery.name }}</td> <!--Write it's name in a column--> 
-        <td>{{brewery.description}}</td> <!--Write it's price in a column--> 
-        <td>
-        <button class="btn btn-secondary"
-                (click)="addToCart()"
-                [disabled]="!isAuthenticated()">
-                Add to shopping cart
-        </button>
-        </td>
-      </tr> 
-    </tbody>
-  </table>
-<div>
-    <div *ngIf="isAdmin()">
-    <h3 class="col-md-12">Add a new Item</h3>
-    <form class="form-inline" (submit)="addNewBrewery()" [formGroup]="breweryForm">
-      <div class="col-auto">
-        <input type="text" 
-          class="form-control" 
-          placeholder="Name" 
-          formControlName="name" 
-          [ngClass]="{ 'is-invalid': brewerySubmitted && getBreweryForm.name.errors }" >
-          <div *ngIf="brewerySubmitted && getBreweryForm.name.errors" class="invalid-feedback">
-            <div *ngIf="getBreweryForm.name.errors.required">Name is required</div>
-          </div>
-      </div>
-      <div class="col-auto">
-        <input type="text" 
-          class="form-control" 
-          placeholder="description" 
-          formControlName="description" 
-          [ngClass]="{ 'is-invalid': brewerySubmitted && getBreweryForm.description.errors }" >
-          <div *ngIf="brewerySubmitted && getBreweryForm.description.errors" class="invalid-feedback">
-            <div *ngIf="getBreweryForm.description.errors.required">description is required and must be a number</div>
-            <div *ngIf="getBreweryForm.description.errors.min">Must start from 0</div>
-          </div>
-      </div>
-      <div class="col-auto">
-        <input type="text" 
-          class="form-control" 
-          placeholder="Image URL" 
-          formControlName="imageURL" 
-          [ngClass]="{ 'is-invalid': brewerySubmitted && getBreweryForm.imageURL.errors }" >
-          <div *ngIf="brewerySubmitted && getBreweryForm.imageURL.errors" class="invalid-feedback">
-            <div *ngIf="getBreweryForm.imageURL.errors.required">Field required</div>
-            <div *ngIf="getBreweryForm.imageURL.errors.min">Must be filled out</div>
-          </div>
-      </div>
-      <div class="col-auto">
-        <input type="text" 
-          class="form-control" 
-          placeholder="Address" 
-          formControlName="address" 
-          [ngClass]="{ 'is-invalid': brewerySubmitted && getBreweryForm.address.errors }" >
-          <div *ngIf="brewerySubmitted && getBreweryForm.address.errors" class="invalid-feedback">
-            <div *ngIf="getBreweryForm.address.errors.required">Field required</div>
-            <div *ngIf="getBreweryForm.address.errors.min">Must be filled out</div>
-          </div>
-      </div>
-      <div class="col-auto">
-        <input type="text" 
-          class="form-control" 
-          placeholder="Zip Code" 
-          formControlName="zipCode" 
-          [ngClass]="{ 'is-invalid': brewerySubmitted && getBreweryForm.zipCode.errors }" >
-          <div *ngIf="brewerySubmitted && getBreweryForm.zipCode.errors" class="invalid-feedback">
-            <div *ngIf="getBreweryForm.zipCode.errors.required">Field required</div>
-            <div *ngIf="getBreweryForm.zipCode.errors.min">Must be filled out</div>
-          </div>
-      </div>
-      <div class="col-auto">
-        <input type="number" 
-          class="form-control" 
-          placeholder="State ID" 
-          formControlName="state" 
-          [ngClass]="{ 'is-invalid': brewerySubmitted && getBreweryForm.state.errors }" >
-          <div *ngIf="brewerySubmitted && getBreweryForm.state.errors" class="invalid-feedback">
-            <div *ngIf="getBreweryForm.state.errors.required">Field required</div>
-            <div *ngIf="getBreweryForm.state.errors.min">Must be filled out</div>
-          </div>
-      </div>
-      <div class="col-auto">
-        <input type="text" 
-          class="form-control" 
-          placeholder="Phone Number" 
-          formControlName="phoneNumber" 
-          [ngClass]="{ 'is-invalid': brewerySubmitted && getBreweryForm.phoneNumber.errors }" >
-          <div *ngIf="brewerySubmitted && getBreweryForm.phoneNumber.errors" class="invalid-feedback">
-            <div *ngIf="getBreweryForm.phoneNumber.errors.required">Field required</div>
-            <div *ngIf="getBreweryForm.phoneNumber.errors.min">Must be filled out</div>
-          </div>
-      </div>
-      <div class="col-auto">
-        <input type="text" 
-          class="form-control" 
-          placeholder="Business Hours" 
-          formControlName="businessHours" 
-          [ngClass]="{ 'is-invalid': brewerySubmitted && getBreweryForm.businessHours.errors }" >
-          <div *ngIf="brewerySubmitted && getBreweryForm.businessHours.errors" class="invalid-feedback">
-            <div *ngIf="getBreweryForm.businessHours.errors.required">Field required</div>
-            <div *ngIf="getBreweryForm.businessHours.errors.min">Must be filled out</div>
-          </div>
-      </div>
-      <div class="col-auto">
-        <input type="checkbox" 
-          class="form-control" 
-          placeholder="Has T-Shirt" 
-          formControlName="hasTShirt" 
-          [ngClass]="{ 'is-invalid': brewerySubmitted && getBreweryForm.hasTShirt.errors }" >
-          <div *ngIf="brewerySubmitted && getBreweryForm.hasTShirt.errors" class="invalid-feedback">
-            <div *ngIf="getBreweryForm.hasTShirt.errors.required">Field required</div>
-            <div *ngIf="getBreweryForm.hasTShirt.errors.min">Must be filled out</div>
-          </div>
-      </div>
-      <div class="col-auto">
-        <input type="checkbox" 
-          class="form-control" 
-          placeholder="Has Mug" 
-          formControlName="hasMug" 
-          [ngClass]="{ 'is-invalid': brewerySubmitted && getBreweryForm.hasMug.errors }" >
-          <div *ngIf="brewerySubmitted && getBreweryForm.hasMug.errors" class="invalid-feedback">
-            <div *ngIf="getBreweryForm.hasMug.errors.required">Field required</div>
-            <div *ngIf="getBreweryForm.hasMug.errors.min">Must be filled out</div>
-          </div>
-      </div>
-      <div class="col-auto">
-        <input type="checkbox" 
-          class="form-control" 
-          placeholder="Has Growler" 
-          formControlName="hasGrowler" 
-          [ngClass]="{ 'is-invalid': brewerySubmitted && getBreweryForm.hasGrowler.errors }" >
-          <div *ngIf="brewerySubmitted && getBreweryForm.hasGrowler.errors" class="invalid-feedback">
-            <div *ngIf="getBreweryForm.hasGrowler.errors.required">Field required</div>
-            <div *ngIf="getBreweryForm.hasGrowler.errors.min">Must be filled out</div>
-          </div>
-      </div>
-      <div class="col-auto">
-        <input type="checkbox" 
-          class="form-control" 
-          placeholder="Has Food" 
-          formControlName="hasFood" 
-          [ngClass]="{ 'is-invalid': brewerySubmitted && getBreweryForm.hasFood.errors }" >
-          <div *ngIf="brewerySubmitted && getBreweryForm.hasFood.errors" class="invalid-feedback">
-            <div *ngIf="getBreweryForm.hasFood.errors.required">Field required</div>
-            <div *ngIf="getBreweryForm.hasFood.errors.min">Must be filled out</div>
-          </div>
-      </div>
-      <div class="col-auto">
-            <button type="submit" class="btn btn-primary mb-2">Add new Brewery</button>
-      </div>
-    </form>
+<div class="columns is-multiline" [@breweriesAnimation]="breweries?.length">
+    <div class="column is-one-third" *ngFor="let brew of breweries">
+        <div class="card">
+            <div class="card-image ">
+                <figure class="image is-4by3 ">
+                    <img
+                        [src]="brew.imageURL"
+                        alt="Placeholder image"
+                        onerror="this.onerror=null;this.src='assets/logo.png'"
+                    />
+                </figure>
+                <div class="ribbon-wrapper">
+                    <div class="ribbon">{{ brew.name }}</div>
+                </div>
+            </div>
+            <div class="card-content card-color">
+                <div>
+                    <img
+                        [src]="
+                            brew.hasTShirt
+                                ? 'assets/t-shirt.png'
+                                : 'assets/noT-shirt.png'
+                        "
+                        class="img-bools"
+                        alt="Placeholder image"
+                    />
+                    <img
+                        [src]="
+                            brew.hasMug
+                                ? 'assets/glasses.png'
+                                : 'assets/noGlasses.png'
+                        "
+                        class="img-bools"
+                        alt="Placeholder image"
+                    />
+                    <img
+                        [src]="
+                            brew.hasGrowler
+                                ? 'assets/growler.png'
+                                : 'assets/noGrowler.png'
+                        "
+                        class="img-bools"
+                        alt="Placeholder image"
+                    />
+                    <img
+                        [src]="
+                            brew.hasFood
+                                ? 'assets/food.png'
+                                : 'assets/noFood.png'
+                        "
+                        class="img-bools"
+                        alt="Placeholder image"
+                    />
+                </div>
+                <div class="content description">
+                    {{ brew.description }}
+                </div>
+                <!-- <div>
+                    <div *ngIf="brew.AverageRating < 2">
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </div>
+                    <div
+                        *ngIf="
+                            brew.AverageRating >= 2 && brew.AverageRating < 4
+                        "
+                    >
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </div>
+                    <div
+                        *ngIf="
+                            brew.AverageRating >= 4 && brew.AverageRating < 6
+                        "
+                    >
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </div>
+                    <div
+                        *ngIf="
+                            brew.AverageRating >= 6 && brew.AverageRating < 8
+                        "
+                    >
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                    </div>
+                    <div *ngIf="brew.AverageRating >= 8">
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                    </div>
+                    Rating: {{ brew?.AverageRating }}
+                </div> -->
+            </div>
+            <footer class="card-footer card-color">
+                <!-- <a class="button card-footer-item  is-link is-rounded" [routerLink]="['/brewery/', brew.BreweryID]" [queryParams]="{ BreweryID: brew.BreweryID }">Details</a> -->
+            </footer>
+        </div>
     </div>
-  </div>
+</div>

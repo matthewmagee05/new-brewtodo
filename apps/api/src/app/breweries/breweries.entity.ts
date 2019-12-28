@@ -1,62 +1,69 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany, ManyToOne, JoinTable, ManyToMany } from 'typeorm';
-import {State} from '@brewtodo/api-interfaces';
-import { States } from '../states/state.entity';
-import { Beer } from '../beer/beer.entity';
-import { Review } from '../review/review.entity';
+import {
+    Entity,
+    Column,
+    PrimaryGeneratedColumn,
+    OneToOne,
+    JoinColumn,
+    OneToMany,
+    ManyToOne,
+    JoinTable,
+    ManyToMany,
+} from 'typeorm'
+import { State } from '@brewtodo/api-interfaces'
+import { States } from '../states/state.entity'
+import { Beer } from '../beer/beer.entity'
+import { Review } from '../review/review.entity'
 
 @Entity()
 export class Breweries {
-
     @PrimaryGeneratedColumn()
-    id: number;
+    id: number
 
     @Column({ length: 255 })
-    name:string;
+    name: string
 
     @Column({ length: 255 })
-    description:string;
+    description: string
 
     @Column({ length: 255 })
-    imageURL:string;
+    imageURL: string
 
     @Column({ length: 255 })
-    address:string;
+    address: string
 
     @Column({ length: 255 })
-    zipCode:string;
-
+    zipCode: string
 
     @ManyToOne(() => States)
     @JoinTable()
-    state: States;
+    state: States
 
     @OneToMany(type => Beer, beer => beer.breweryId)
     @JoinTable()
-    beer: Beer[];
+    beer: Beer[]
 
     @OneToMany(type => Review, review => review.breweryId)
     @JoinTable()
-    review: Review[];
-
-
-    @Column({ length: 255 })
-    phoneNumber:string;
+    review: Review[]
 
     @Column({ length: 255 })
-    businessHours:string;
+    phoneNumber: string
+
+    @Column({ length: 255 })
+    businessHours: string
 
     @Column()
-    hasTShirt:boolean;
+    hasTShirt: boolean
 
     @Column()
-    hasMug:boolean;
+    hasMug: boolean
 
     @Column()
-    hasGrowler:boolean;
+    hasGrowler: boolean
 
     @Column()
-    hasFood:boolean;
+    hasFood: boolean
 
-  
-
+    @Column()
+    isFeatured: boolean
 }
