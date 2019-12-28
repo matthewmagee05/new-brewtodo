@@ -1,0 +1,17 @@
+.logo {
+    max-width: 50px;
+}
+
+.navbar-collapse.collapse.in {
+    display: block !important;
+}
+
+nav {
+    margin-bottom: 20px;
+}
+
+.profile {
+    color: white;
+    margin-right: 20px;
+    margin-bottom: 10px;
+}

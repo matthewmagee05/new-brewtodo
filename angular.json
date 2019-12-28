@@ -21,8 +21,15 @@
               "apps/brewtodo/src/favicon.ico",
               "apps/brewtodo/src/assets"
             ],
-            "styles": ["apps/brewtodo/src/styles.css"],
-            "scripts": []
+            "styles": [
+              "node_modules/bulma/css/bulma.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/font-awesome/css/font-awesome.css",
+              "apps/brewtodo/src/styles.css"],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.js",
+              "node_modules/bootstrap/dist/js/bootstrap.js"
+            ]
           },
           "configurations": {
             "production": {
