@@ -11,9 +11,15 @@ export class BreweriesService {
     ) {}
 
     async findAll(): Promise<Breweries[]> {
-        return await this.breweryRepository.find({
+        let results = await this.breweryRepository.find({
             relations: ['state', 'beer', 'review', 'review.user'],
         })
+
+        if (results !== null) {
+            results = this.calculateAverageReview(results)
+        }
+
+        return results
     }
 
     async findFeaturedBreweries(): Promise<Partial<Breweries[]>> {
