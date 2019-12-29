@@ -16,11 +16,17 @@ export class BreweriesService {
         })
     }
 
-    async findFeaturedBreweries(): Promise<Breweries[]> {
-        return await this.breweryRepository.find({
+    async findFeaturedBreweries(): Promise<Partial<Breweries[]>> {
+        let results = await this.breweryRepository.find({
             relations: ['state', 'beer', 'review', 'review.user'],
             where: { isFeatured: true },
         })
+
+        if (results !== null) {
+            results = this.calculateAverageReview(results)
+        }
+
+        return results
     }
 
     async createBrewery(brewery: Breweries) {
@@ -29,5 +35,17 @@ export class BreweriesService {
 
     async deleteBrewery(brewery: Breweries) {
         this.breweryRepository.delete(brewery)
+    }
+
+    calculateAverageReview(breweries: Breweries[]) {
+        breweries.forEach(brewery => {
+            const total =
+                brewery.review.reduce((p, c) => {
+                    return p + parseFloat(c.rating)
+                }, 0) / brewery.review.length
+            brewery.avgReview = isNaN(total) ? 0 : Math.round(total)
+        })
+
+        return breweries
     }
 }

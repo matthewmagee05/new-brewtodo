@@ -8,7 +8,7 @@ import { BreweriesComponent } from './Components/breweries/breweries.component'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { HeaderComponent } from './Components/header/header.component'
 import { AddBreweryComponent } from './Components/add-brewery/add-brewery.component'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FeaturedBreweriesComponent } from './Components/featured-breweries/featured-breweries.component'
 
 @NgModule({

@@ -66,4 +66,10 @@ export class Breweries {
 
     @Column()
     isFeatured: boolean
+
+    @Column('decimal', {
+        nullable: true,
+        select: false,
+    })
+    avgReview: number
 }

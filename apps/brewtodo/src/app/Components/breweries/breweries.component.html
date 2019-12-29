@@ -55,59 +55,30 @@
                 <div class="content description">
                     {{ brew.description }}
                 </div>
-                <!-- <div>
-                    <div *ngIf="brew.AverageRating < 2">
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                    </div>
-                    <div
-                        *ngIf="
-                            brew.AverageRating >= 2 && brew.AverageRating < 4
+                <div>
+                    <span
+                        *ngFor="
+                            let dummy of ' '.repeat(brew.avgReview).split('');
+                            let x = index
                         "
-                    >
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                    </div>
-                    <div
-                        *ngIf="
-                            brew.AverageRating >= 4 && brew.AverageRating < 6
+                        class="fa fa-star checked"
+                    ></span>
+                    <span
+                        *ngFor="
+                            let dummy of ' '
+                                .repeat(10 - brew.avgReview)
+                                .split('');
+                            let x = index
                         "
-                    >
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                    </div>
-                    <div
-                        *ngIf="
-                            brew.AverageRating >= 6 && brew.AverageRating < 8
-                        "
-                    >
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                    </div>
-                    <div *ngIf="brew.AverageRating >= 8">
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                    </div>
-                    Rating: {{ brew?.AverageRating }}
-                </div> -->
+                        class="fa fa-star"
+                    ></span>
+                    {{ brew?.avgReview }} / 10
+                </div>
             </div>
             <footer class="card-footer card-color">
-                <!-- <a class="button card-footer-item  is-link is-rounded" [routerLink]="['/brewery/', brew.BreweryID]" [queryParams]="{ BreweryID: brew.BreweryID }">Details</a> -->
+                <a class="button card-footer-item  is-link is-rounded"
+                    >Details</a
+                >
             </footer>
         </div>
     </div>

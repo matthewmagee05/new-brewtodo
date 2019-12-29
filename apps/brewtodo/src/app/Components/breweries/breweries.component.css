@@ -2,6 +2,10 @@
     color: #dcdd0d;
 }
 
+span {
+    font-size: 20px;
+}
+
 .ribbon-wrapper {
     width: 85px;
     height: 88px;
