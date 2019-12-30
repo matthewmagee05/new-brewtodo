@@ -1,13 +1,15 @@
 <div class="columns is-multiline">
     <div class="column is-one-third">
-        <brewtodo-brewery-details></brewtodo-brewery-details>
+        <brewtodo-brewery-details
+            [brewery]="brewery"
+        ></brewtodo-brewery-details>
     </div>
     <div class="column is-one-half">
         <div></div>
         <div></div>
         <div></div>
-        <!-- <app-map [brewery]="brewery"></app-map>
-        <app-beer [brewery]="brewery"></app-beer>
-        <app-review [brewery]="brewery"></app-review> -->
+        <!-- <app-map [brewery]="brewery"></app-map> -->
+        <brewtodo-beer [beers]="beers"></brewtodo-beer>
+        <brewtodo-review [reviews]="reviews"></brewtodo-review>
     </div>
 </div>

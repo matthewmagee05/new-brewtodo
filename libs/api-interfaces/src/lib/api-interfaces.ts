@@ -17,6 +17,25 @@ export interface Brewery {
     readonly hasGrowler: boolean
     readonly hasFood: boolean
     readonly avgReview: number
+    readonly beer: Beer[]
+    readonly review: Review[]
+}
+
+export interface Beer {
+    id: number
+    name: string
+    description: string
+    abv: number
+    beerTypeId: number
+    breweryId: number
+}
+
+export interface Review {
+    id: number
+    description: string
+    rating: number
+    userId: number
+    breweryId: number
 }
 
 export interface State {

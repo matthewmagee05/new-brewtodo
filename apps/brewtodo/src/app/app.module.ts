@@ -13,7 +13,9 @@ import { FeaturedBreweriesComponent } from './Components/featured-breweries/feat
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './Components/home/home.component';
 import { BreweryDetailsComponent } from './Components/brewery-details/brewery-details.component';
-import { BreweryDetailsWrapperComponent } from './Components/brewery-details-wrapper/brewery-details-wrapper.component'
+import { BreweryDetailsWrapperComponent } from './Components/brewery-details-wrapper/brewery-details-wrapper.component';
+import { BeerComponent } from './Components/beer/beer.component';
+import { ReviewComponent } from './Components/review/review.component'
 
 @NgModule({
     declarations: [
@@ -26,6 +28,8 @@ import { BreweryDetailsWrapperComponent } from './Components/brewery-details-wra
         HomeComponent,
         BreweryDetailsComponent,
         BreweryDetailsWrapperComponent,
+        BeerComponent,
+        ReviewComponent,
     ],
     imports: [
         BrowserModule,
