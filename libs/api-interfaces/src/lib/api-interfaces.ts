@@ -3,6 +3,7 @@ export interface Message {
 }
 
 export interface Brewery {
+    readonly id: number
     readonly name: string
     readonly description: string
     readonly imageURL: string

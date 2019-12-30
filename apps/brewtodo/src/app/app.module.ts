@@ -10,6 +10,8 @@ import { HeaderComponent } from './Components/header/header.component'
 import { AddBreweryComponent } from './Components/add-brewery/add-brewery.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FeaturedBreweriesComponent } from './Components/featured-breweries/featured-breweries.component'
+import { AppRoutingModule } from './app-routing.module';
+import { HomeComponent } from './Components/home/home.component'
 
 @NgModule({
     declarations: [
@@ -19,6 +21,7 @@ import { FeaturedBreweriesComponent } from './Components/featured-breweries/feat
         HeaderComponent,
         AddBreweryComponent,
         FeaturedBreweriesComponent,
+        HomeComponent,
     ],
     imports: [
         BrowserModule,
@@ -26,6 +29,7 @@ import { FeaturedBreweriesComponent } from './Components/featured-breweries/feat
         FormsModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
+        AppRoutingModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
