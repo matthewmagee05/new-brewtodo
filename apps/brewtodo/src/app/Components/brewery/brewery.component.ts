@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core'
+import { Brewery } from '@brewtodo/api-interfaces'
 
 @Component({
-  selector: 'brewtodo-brewery',
-  templateUrl: './brewery.component.html',
-  styleUrls: ['./brewery.component.css']
+    selector: 'brewtodo-brewery',
+    templateUrl: './brewery.component.html',
+    styleUrls: ['./brewery.component.css'],
 })
 export class BreweryComponent implements OnInit {
+    @Input() brew: Brewery
 
-  constructor() { }
+    constructor() {}
 
-  ngOnInit() {
-  }
-
+    ngOnInit() {}
 }

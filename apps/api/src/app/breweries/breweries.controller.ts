@@ -6,6 +6,7 @@ import {
     UsePipes,
     UseGuards,
     Delete,
+    Param,
 } from '@nestjs/common'
 import { BreweriesService } from './breweries.service'
 import { ValidationPipe } from '../../common/validation.pipe'
@@ -24,6 +25,11 @@ export class BreweriesController {
     @Get('featured-breweries')
     async getFeaturedBreweries(): Promise<Breweries[]> {
         return this.breweryService.findFeaturedBreweries()
+    }
+
+    @Get('brewery/:breweryId')
+    async getBreweryById(@Param('breweryId') breweryId): Promise<Breweries> {
+        return this.breweryService.getBreweryById(breweryId)
     }
 
     @Post()

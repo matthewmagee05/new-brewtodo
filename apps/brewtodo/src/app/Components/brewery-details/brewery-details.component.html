@@ -2,20 +2,20 @@
     <div class="card-image ">
         <figure class="image is-4by3 ">
             <img
-                [src]="brew.imageURL"
+                [src]="brewery?.imageURL"
                 alt="Placeholder image"
                 onerror="this.onerror=null;this.src='assets/logo.png'"
             />
         </figure>
         <div class="ribbon-wrapper">
-            <div class="ribbon">{{ brew.name }}</div>
+            <div class="ribbon">{{ brewery?.name }}</div>
         </div>
     </div>
     <div class="card-content card-color">
         <div>
             <img
                 [src]="
-                    brew.hasTShirt
+                    brewery?.hasTShirt
                         ? 'assets/t-shirt.png'
                         : 'assets/noT-shirt.png'
                 "
@@ -24,14 +24,16 @@
             />
             <img
                 [src]="
-                    brew.hasMug ? 'assets/glasses.png' : 'assets/noGlasses.png'
+                    brewery?.hasMug
+                        ? 'assets/glasses.png'
+                        : 'assets/noGlasses.png'
                 "
                 class="img-bools"
                 alt="Placeholder image"
             />
             <img
                 [src]="
-                    brew.hasGrowler
+                    brewery?.hasGrowler
                         ? 'assets/growler.png'
                         : 'assets/noGrowler.png'
                 "
@@ -39,37 +41,39 @@
                 alt="Placeholder image"
             />
             <img
-                [src]="brew.hasFood ? 'assets/food.png' : 'assets/noFood.png'"
+                [src]="
+                    brewery?.hasFood ? 'assets/food.png' : 'assets/noFood.png'
+                "
                 class="img-bools"
                 alt="Placeholder image"
             />
         </div>
         <div class="content description">
-            {{ brew.description }}
+            <p><b>Business Hours</b></p>
+            {{ brewery?.businessHours }}
+            <hr />
+            <p><b>Contact Number</b></p>
+            {{ brewery?.phoneNumber }}
+            <hr />
+            <p><b>About Us</b></p>
+            {{ brewery?.description }}
         </div>
         <div>
             <span
                 *ngFor="
-                    let dummy of ' '.repeat(brew.avgReview).split('');
+                    let dummy of ' '.repeat(brewery?.avgReview).split('');
                     let x = index
                 "
                 class="fa fa-star checked"
             ></span>
             <span
                 *ngFor="
-                    let dummy of ' '.repeat(10 - brew.avgReview).split('');
+                    let dummy of ' '.repeat(10 - brewery?.avgReview).split('');
                     let x = index
                 "
                 class="fa fa-star"
             ></span>
-            {{ brew?.avgReview }} / 10
+            {{ brewery?.avgReview }} / 10
         </div>
     </div>
-    <footer class="card-footer card-color">
-        <a
-            class="button card-footer-item  is-link is-rounded"
-            [routerLink]="['/brewery/', brew.id]"
-            >Details</a
-        >
-    </footer>
 </div>

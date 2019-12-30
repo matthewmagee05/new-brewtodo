@@ -35,6 +35,19 @@ export class BreweriesService {
         return results
     }
 
+    async getBreweryById(breweryId: number): Promise<Breweries> {
+        let results = await this.breweryRepository.findOne({
+            relations: ['state', 'beer', 'review', 'review.user'],
+            where: { id: breweryId },
+        })
+
+        if (results !== null) {
+            results = this.calculateSingleReview(results)
+        }
+
+        return results
+    }
+
     async createBrewery(brewery: Breweries) {
         this.breweryRepository.save(brewery)
     }
@@ -53,5 +66,14 @@ export class BreweriesService {
         })
 
         return breweries
+    }
+
+    calculateSingleReview(brewery: Breweries) {
+        const total =
+            brewery.review.reduce((p, c) => {
+                return p + parseFloat(c.rating)
+            }, 0) / brewery.review.length
+        brewery.avgReview = isNaN(total) ? 0 : Math.round(total)
+        return brewery
     }
 }

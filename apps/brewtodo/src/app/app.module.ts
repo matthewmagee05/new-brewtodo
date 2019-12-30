@@ -11,7 +11,9 @@ import { AddBreweryComponent } from './Components/add-brewery/add-brewery.compon
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FeaturedBreweriesComponent } from './Components/featured-breweries/featured-breweries.component'
 import { AppRoutingModule } from './app-routing.module';
-import { HomeComponent } from './Components/home/home.component'
+import { HomeComponent } from './Components/home/home.component';
+import { BreweryDetailsComponent } from './Components/brewery-details/brewery-details.component';
+import { BreweryDetailsWrapperComponent } from './Components/brewery-details-wrapper/brewery-details-wrapper.component'
 
 @NgModule({
     declarations: [
@@ -22,6 +24,8 @@ import { HomeComponent } from './Components/home/home.component'
         AddBreweryComponent,
         FeaturedBreweriesComponent,
         HomeComponent,
+        BreweryDetailsComponent,
+        BreweryDetailsWrapperComponent,
     ],
     imports: [
         BrowserModule,

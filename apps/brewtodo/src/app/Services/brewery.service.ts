@@ -27,6 +27,10 @@ export class BreweryService {
         return this.http.get<Brewery[]>('api/breweries/featured-breweries')
     }
 
+    public getBreweryById(id: number): Observable<Brewery> {
+        return this.http.get<Brewery>(`api/breweries/brewery/${id}`)
+    }
+
     public postItems(brewery: Brewery): Observable<Brewery> {
         return this.http.post<Brewery>(
             '/api/breweries',
