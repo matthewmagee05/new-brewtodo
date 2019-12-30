@@ -18,6 +18,7 @@ import { BeerComponent } from './Components/beer/beer.component'
 import { ReviewComponent } from './Components/review/review.component'
 import { MapComponent } from './Components/map/map.component'
 import { AgmCoreModule } from '@agm/core'
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 
 @NgModule({
     declarations: [
@@ -44,6 +45,7 @@ import { AgmCoreModule } from '@agm/core'
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyCPsZmjBdiOTHXKup0Qv8bimAL4N4N_RgE',
         }),
+        NgbModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

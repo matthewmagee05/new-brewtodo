@@ -1,2 +1,4 @@
 <h4>Featured Breweries</h4>
-<brewtodo-breweries [breweries]="breweries"></brewtodo-breweries>
+<div *ngIf="breweries">
+    <brewtodo-breweries [breweries]="breweries"></brewtodo-breweries>
+</div>

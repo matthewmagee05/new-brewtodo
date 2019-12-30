@@ -44,6 +44,7 @@
         "@nestjs/core": "^6.8.3",
         "@nestjs/platform-express": "^6.8.3",
         "@nestjs/typeorm": "^6.2.0",
+        "@ng-bootstrap/ng-bootstrap": "^5.1.4",
         "@nrwl/angular": "8.9.0",
         "@types/googlemaps": "^3.39.0",
         "auth0-js": "^9.12.1",

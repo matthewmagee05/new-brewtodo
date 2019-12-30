@@ -52,3 +52,7 @@ span {
 h4 {
     margin-bottom: 30px;
 }
+
+.templates {
+    display: inline-block;
+}

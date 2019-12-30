@@ -1,5 +1,22 @@
 <div class="columns is-multiline" [@breweriesAnimation]="breweries?.length">
-    <div class="column is-3" *ngFor="let brew of breweries">
-        <brewtodo-brewery [brew]="brew"></brewtodo-brewery>
-    </div>
+    <ngb-carousel>
+        <ng-container *ngFor="let a of breweries; let i = index">
+            <ng-template ngbSlide *ngIf="i % 3 === 0">
+                <div
+                    *ngFor="
+                        let brew of [
+                            breweries[i],
+                            breweries[i + 1],
+                            breweries[i + 2]
+                        ]
+                    "
+                    class="column is-4 templates"
+                >
+                    <ng-container *ngIf="brew">
+                        <brewtodo-brewery [brew]="brew"></brewtodo-brewery>
+                    </ng-container>
+                </div>
+            </ng-template>
+        </ng-container>
+    </ngb-carousel>
 </div>
