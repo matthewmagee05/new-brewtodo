@@ -5,10 +5,9 @@
         ></brewtodo-brewery-details>
     </div>
     <div class="column is-one-half">
-        <div></div>
-        <div></div>
-        <div></div>
-        <!-- <app-map [brewery]="brewery"></app-map> -->
+        <div *ngIf="brewery">
+            <brewtodo-map [brewery]="brewery"></brewtodo-map>
+        </div>
         <brewtodo-beer [beers]="beers"></brewtodo-beer>
         <brewtodo-review [reviews]="reviews"></brewtodo-review>
     </div>

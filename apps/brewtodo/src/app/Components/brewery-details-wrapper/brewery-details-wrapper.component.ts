@@ -27,7 +27,6 @@ export class BreweryDetailsWrapperComponent implements OnInit {
                 this.brewery = res
                 this.beers = res.beer
                 this.reviews = res.review
-                console.log(res)
             })
         })
     }
