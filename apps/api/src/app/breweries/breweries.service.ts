@@ -2,6 +2,11 @@ import { Injectable, Inject } from '@nestjs/common'
 import { constants } from '../../common/constants'
 import { Repository } from 'typeorm'
 import { Breweries } from './breweries.entity'
+import {
+    paginate,
+    IPaginationOptions,
+    Pagination,
+} from 'nestjs-typeorm-paginate'
 
 @Injectable()
 export class BreweriesService {
@@ -9,6 +14,14 @@ export class BreweriesService {
         @Inject(constants.breweryRepository)
         private breweryRepository: Repository<Breweries>
     ) {}
+
+    async paginate(
+        options: IPaginationOptions
+    ): Promise<Pagination<Breweries>> {
+        return await paginate<Breweries>(this.breweryRepository, options, {
+            relations: ['state', 'beer', 'review', 'review.user'],
+        })
+    }
 
     async findAll(): Promise<Breweries[]> {
         let results = await this.breweryRepository.find({

@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
-import { BreweryComponent } from './Components/brewery/brewery.component'
 import { HomeComponent } from './Components/home/home.component'
 import { BreweryDetailsWrapperComponent } from './Components/brewery-details-wrapper/brewery-details-wrapper.component'
+import { BreweriesSearchComponent } from './Components/breweries-search/breweries-search.component'
 
 const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'home', component: HomeComponent },
     { path: 'login', component: HomeComponent },
     { path: 'brewery/:id', component: BreweryDetailsWrapperComponent },
+    { path: 'breweries', component: BreweriesSearchComponent },
 ]
 
 @NgModule({

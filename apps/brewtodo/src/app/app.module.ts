@@ -18,7 +18,8 @@ import { BeerComponent } from './Components/beer/beer.component'
 import { ReviewComponent } from './Components/review/review.component'
 import { MapComponent } from './Components/map/map.component'
 import { AgmCoreModule } from '@agm/core'
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BreweriesSearchComponent } from './Components/breweries-search/breweries-search.component'
 
 @NgModule({
     declarations: [
@@ -34,6 +35,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
         BeerComponent,
         ReviewComponent,
         MapComponent,
+        BreweriesSearchComponent,
     ],
     imports: [
         BrowserModule,

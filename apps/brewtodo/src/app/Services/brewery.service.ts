@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
-import { Brewery } from '@brewtodo/api-interfaces'
+import { Brewery, Paginator } from '@brewtodo/api-interfaces'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { AuthService } from '../auth/auth.service'
 
@@ -19,8 +19,10 @@ export class BreweryService {
         }
     }
 
-    public getBrewery(): Observable<Brewery[]> {
-        return this.http.get<Brewery[]>('/api/breweries')
+    public getBreweries(
+        url: string = 'http://localhost:4200/api/breweries/?page=1&limit=12'
+    ): Observable<Paginator> {
+        return this.http.get<Paginator>(url)
     }
 
     public getFeaturedBreweries(): Observable<Brewery[]> {

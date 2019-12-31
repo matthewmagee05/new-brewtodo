@@ -16,9 +16,18 @@ export interface Brewery {
     readonly hasMug: boolean
     readonly hasGrowler: boolean
     readonly hasFood: boolean
-    readonly avgReview: number
+    avgReview: number
     readonly beer: Beer[]
     readonly review: Review[]
+}
+
+export interface Paginator {
+    items: Brewery[]
+    readonly itemCount: number
+    readonly totalItems: number
+    readonly pageCount: number
+    readonly next: string
+    readonly previous: string
 }
 
 export interface Beer {
@@ -33,7 +42,7 @@ export interface Beer {
 export interface Review {
     id: number
     description: string
-    rating: number
+    rating: string
     userId: number
     breweryId: number
 }

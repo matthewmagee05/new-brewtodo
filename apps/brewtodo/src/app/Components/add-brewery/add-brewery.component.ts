@@ -22,9 +22,9 @@ export class AddBreweryComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.breweryService
-            .getBrewery()
-            .subscribe(breweries => (this.breweries = breweries))
+        // this.breweryService
+        //     .getBrewery()
+        //     .subscribe(breweries => (this.breweries = breweries))
 
         this.breweryForm = this.formBuilder.group({
             name: ['', Validators.required],

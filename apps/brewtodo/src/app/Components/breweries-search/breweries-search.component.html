@@ -1,0 +1,35 @@
+<ng-container *ngFor="let brewery of paginator?.items">
+    <div class="column is-3 brewery-display">
+        <brewtodo-brewery [brew]="brewery"></brewtodo-brewery>
+    </div>
+</ng-container>
+<hr />
+<nav class="pagination level" role="navigation" aria-label="pagination">
+    <button
+        class="pagination-previous"
+        (click)="getBreweries(paginator.previous)"
+        [disabled]="paginator?.previous.length === 0"
+    >
+        Previous
+    </button>
+    <ul class="pagination-list" *ngFor="let number of pageCount">
+        <li>
+            <button
+                class="pagination-link"
+                [class.is-current]="number + 1 === currentPage"
+                (click)="getPageByNumber(number + 1)"
+            >
+                {{ number + 1 }}
+            </button>
+        </li>
+    </ul>
+    <button
+        class="pagination-previous"
+        (click)="getBreweries(paginator.next)"
+        [disabled]="paginator?.next.length === 0"
+    >
+        Next Page
+    </button>
+</nav>
+
+<div class="is-divider" data-content="OR"></div>
