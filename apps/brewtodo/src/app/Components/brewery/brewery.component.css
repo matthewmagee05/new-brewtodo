@@ -29,6 +29,24 @@
     color: #5d5d4c;
 }
 
+.distance-wrapper {
+    width: 100px;
+    height: 10px;
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+    z-index: 2;
+}
+
+.distance {
+    background-color: #dcdd0d;
+    opacity: 0.8;
+    bottom: 1px;
+    right: 1px;
+    position: relative;
+    text-align: center;
+}
+
 .img-bools {
     width: 22%;
 }

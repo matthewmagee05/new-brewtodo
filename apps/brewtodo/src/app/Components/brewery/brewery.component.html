@@ -6,6 +6,11 @@
                 alt="Placeholder image"
                 onerror="this.onerror=null;this.src='assets/logo.png'"
             />
+            <div class="distance-wrapper" *ngIf="brew?.distance">
+                <p class="is-small distance">
+                    {{ brew?.distance?.toFixed(1) }} miles
+                </p>
+            </div>
         </figure>
         <div class="ribbon-wrapper">
             <div class="ribbon">{{ brew.name }}</div>

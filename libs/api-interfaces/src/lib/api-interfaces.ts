@@ -19,6 +19,7 @@ export interface Brewery {
     avgReview: number
     readonly beer: Beer[]
     readonly review: Review[]
+    readonly distance: number
 }
 
 export interface BeerType {
