@@ -18,47 +18,162 @@ export class BreweriesService {
     async paginate(
         options: IPaginationOptions
     ): Promise<Pagination<Breweries>> {
-        return await paginate<Breweries>(this.breweryRepository, options, {
-            relations: ['state', 'beer', 'review', 'review.user'],
-        })
+        const queryBuilder = this.breweryRepository.createQueryBuilder(
+            'breweries'
+        )
+        queryBuilder
+            .select()
+
+            .leftJoinAndSelect(
+                'breweries.review',
+                'review',
+                'review.breweryId =  breweries.id'
+            )
+            .leftJoinAndSelect(
+                'breweries.beer',
+                'beer',
+                'beer.breweryId =  breweries.id'
+            )
+            .leftJoinAndSelect(
+                'breweries.state',
+                'state',
+                'state.id =  breweries.state'
+            )
+            .leftJoinAndSelect('review.user', 'user', 'user.id =  review.user')
+            .addSelect(
+                '(SELECT ROUND( AVG(review.rating),1 ) FROM review WHERE review.breweryId = breweries.id)',
+                'breweries_avgReview'
+            )
+
+        return await paginate<Breweries>(queryBuilder, options)
+    }
+
+    async findByFilters(
+        options: IPaginationOptions,
+        lat: number = 29.6211025,
+        lng = -95.2632201,
+        distance: number = 25
+    ): Promise<Pagination<Breweries>> {
+        const queryBuilder = this.breweryRepository.createQueryBuilder(
+            'breweries'
+        )
+        queryBuilder
+            .select()
+            .addSelect(
+                `(3959 * acos(cos(radians(${lat})) * cos(radians(lat)) * cos(radians(lng) - radians(${lng})) + sin(radians(${lat})) * sin(radians(lat ))))`,
+                'breweries_distance'
+            )
+            .leftJoinAndSelect(
+                'breweries.review',
+                'review',
+                'review.breweryId =  breweries.id'
+            )
+            .leftJoinAndSelect(
+                'breweries.beer',
+                'beer',
+                'beer.breweryId =  breweries.id'
+            )
+            .leftJoinAndSelect(
+                'breweries.state',
+                'state',
+                'state.id =  breweries.state'
+            )
+            .leftJoinAndSelect('review.user', 'user', 'user.id =  review.user')
+            .addSelect(
+                '(SELECT ROUND( AVG(review.rating),1 ) FROM review WHERE review.breweryId = breweries.id)',
+                'breweries_avgReview'
+            )
+            .where(
+                `(3959 * acos(cos(radians(${lat})) * cos(radians(lat)) * cos(radians(lng) - radians(${lng})) + sin(radians(${lat})) * sin(radians(lat )))) < ${distance}`
+            )
+
+        return await paginate<Breweries>(queryBuilder, options)
     }
 
     async findAll(): Promise<Breweries[]> {
-        let results = await this.breweryRepository.find({
-            relations: ['state', 'beer', 'review', 'review.user'],
-        })
+        return await this.breweryRepository
+            .createQueryBuilder('breweries')
+            .select()
 
-        if (results !== null) {
-            results = this.calculateAverageReview(results)
-        }
-
-        return results
+            .leftJoinAndSelect(
+                'breweries.review',
+                'review',
+                'review.breweryId =  breweries.id'
+            )
+            .leftJoinAndSelect(
+                'breweries.beer',
+                'beer',
+                'beer.breweryId =  breweries.id'
+            )
+            .leftJoinAndSelect(
+                'breweries.state',
+                'state',
+                'state.id =  breweries.state'
+            )
+            .leftJoinAndSelect('review.user', 'user', 'user.id =  review.user')
+            .addSelect(
+                '(SELECT ROUND( AVG(review.rating),1 ) FROM review WHERE review.breweryId = breweries.id)',
+                'breweries_avgReview'
+            )
+            .getMany()
     }
 
     async findFeaturedBreweries(): Promise<Partial<Breweries[]>> {
-        let results = await this.breweryRepository.find({
-            relations: ['state', 'beer', 'review', 'review.user'],
-            where: { isFeatured: true },
-        })
+        return await this.breweryRepository
+            .createQueryBuilder('breweries')
+            .select()
 
-        if (results !== null) {
-            results = this.calculateAverageReview(results)
-        }
-
-        return results
+            .leftJoinAndSelect(
+                'breweries.review',
+                'review',
+                'review.breweryId =  breweries.id'
+            )
+            .leftJoinAndSelect(
+                'breweries.beer',
+                'beer',
+                'beer.breweryId =  breweries.id'
+            )
+            .leftJoinAndSelect(
+                'breweries.state',
+                'state',
+                'state.id =  breweries.state'
+            )
+            .leftJoinAndSelect('review.user', 'user', 'user.id =  review.user')
+            .addSelect(
+                '(SELECT ROUND( AVG(review.rating),1 ) FROM review WHERE review.breweryId = breweries.id)',
+                'breweries_avgReview'
+            )
+            .where('breweries.isFeatured = true')
+            .getMany()
     }
 
     async getBreweryById(breweryId: number): Promise<Breweries> {
-        let results = await this.breweryRepository.findOne({
-            relations: ['state', 'beer', 'review', 'review.user'],
-            where: { id: breweryId },
-        })
+        return await this.breweryRepository
+            .createQueryBuilder('breweries')
+            .select()
 
-        if (results !== null) {
-            results = this.calculateSingleReview(results)
-        }
-
-        return results
+            .leftJoinAndSelect(
+                'breweries.review',
+                'review',
+                'review.breweryId =  breweries.id'
+            )
+            .leftJoinAndSelect(
+                'breweries.beer',
+                'beer',
+                'beer.breweryId =  breweries.id'
+            )
+            .leftJoinAndSelect(
+                'breweries.state',
+                'state',
+                'state.id =  breweries.state'
+            )
+            .leftJoinAndSelect('review.user', 'user', 'user.id =  review.user')
+            .addSelect(
+                '(SELECT ROUND( AVG(review.rating),1 ) FROM review WHERE review.breweryId = breweries.id)',
+                'breweries_avgReview'
+            )
+            .where(`breweries.id = ${breweryId}`)
+            .getOne()
     }
 
     async createBrewery(brewery: Breweries) {
@@ -67,26 +182,5 @@ export class BreweriesService {
 
     async deleteBrewery(brewery: Breweries) {
         this.breweryRepository.delete(brewery)
-    }
-
-    calculateAverageReview(breweries: Breweries[]) {
-        breweries.forEach(brewery => {
-            const total =
-                brewery.review.reduce((p, c) => {
-                    return p + parseFloat(c.rating)
-                }, 0) / brewery.review.length
-            brewery.avgReview = isNaN(total) ? 0 : Math.round(total)
-        })
-
-        return breweries
-    }
-
-    calculateSingleReview(brewery: Breweries) {
-        const total =
-            brewery.review.reduce((p, c) => {
-                return p + parseFloat(c.rating)
-            }, 0) / brewery.review.length
-        brewery.avgReview = isNaN(total) ? 0 : Math.round(total)
-        return brewery
     }
 }

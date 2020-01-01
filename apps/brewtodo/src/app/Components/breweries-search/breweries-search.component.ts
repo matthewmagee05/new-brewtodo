@@ -11,25 +11,24 @@ export class BreweriesSearchComponent implements OnInit {
     @Output() paginator: Paginator
     pageCount: any[]
     currentPage: number
-    constructor(private breweryService: BreweryService) {}
+    lat: number
+    lng: number
+    distance: number
+    constructor(public breweryService: BreweryService) {}
 
     ngOnInit() {
         this.breweryService.getBreweries().subscribe(res => {
-            const brews = this.calculateAverageReview(res.items)
             this.paginator = res
             this.pageCount = Array.from(Array(this.paginator.pageCount)).map(
-                (x, i) => i
+                (x, i) => i + 1
             )
-            this.paginator.items = brews
             this.getCurrentPage(this.paginator.next)
         })
     }
 
     getBreweries(url: string) {
         this.breweryService.getBreweries(url).subscribe(res => {
-            const brews = this.calculateAverageReview(res.items)
             this.paginator = res
-            this.paginator.items = brews
             this.getCurrentPage(this.paginator.next)
         })
     }
@@ -37,32 +36,66 @@ export class BreweriesSearchComponent implements OnInit {
     getPageByNumber(pageNumber: number) {
         let currentPageIndex = this.paginator.next.indexOf('=')
         let endingPageIndex = this.paginator.next.indexOf('&')
-        let next = this.paginator.next
-        next =
-            next.substring(0, currentPageIndex + 1) +
-            pageNumber +
-            next.substring(endingPageIndex)
-        this.getBreweries(next)
-    }
+        let next =
+            this.paginator.next.length > 0
+                ? this.paginator.next
+                : this.paginator.previous
 
-    calculateAverageReview(breweries: Brewery[]) {
-        breweries.forEach(brewery => {
-            const total =
-                brewery.review.reduce((p, c) => {
-                    return p + parseFloat(c.rating)
-                }, 0) / brewery.review.length
-            brewery.avgReview = isNaN(total) ? 0 : Math.round(total)
-        })
-        return breweries
+        if (currentPageIndex === this.paginator.pageCount) {
+            next =
+                next.substring(0, currentPageIndex) +
+                pageNumber +
+                next.substring(endingPageIndex)
+        } else {
+            next =
+                next.substring(0, currentPageIndex + 1) +
+                pageNumber +
+                next.substring(endingPageIndex)
+        }
+
+        this.breweryService.isLocation
+            ? this.getBreweriesLocation(next)
+            : this.getBreweries(next)
     }
 
     getCurrentPage(next) {
-        let currentPageIndex = this.paginator.next.indexOf('=')
-        let endingPageIndex = this.paginator.next.indexOf('&')
-        this.currentPage = parseInt(
-            next.substring(currentPageIndex + 1, endingPageIndex - 1)
-        )
-        this.currentPage =
-            parseInt(next.substring(currentPageIndex + 1, endingPageIndex)) - 1
+        if (this.paginator.next.length < 1) {
+            this.currentPage = this.paginator.pageCount
+        } else {
+            let currentPageIndex = this.paginator.next.indexOf('=')
+            let endingPageIndex = this.paginator.next.indexOf('&')
+
+            this.currentPage = parseInt(
+                next.substring(currentPageIndex + 1, endingPageIndex - 1)
+            )
+
+            this.currentPage =
+                parseInt(
+                    next.substring(currentPageIndex + 1, endingPageIndex)
+                ) - 1
+        }
+    }
+
+    public handleAddressChange(address: any) {
+        this.lat = address.geometry.location.lat()
+        this.lng = address.geometry.location.lng()
+        this.breweryService
+            .getBreweryByFilter(this.lat, this.lng)
+            .subscribe(res => {
+                this.paginator = res
+                this.pageCount = Array.from(
+                    Array(this.paginator.pageCount)
+                ).map((x, i) => i + 1)
+                this.getCurrentPage(this.paginator.next)
+            })
+    }
+
+    getBreweriesLocation(next: string) {
+        this.breweryService
+            .getBreweryByFilter(this.lat, this.lng, this.distance, next)
+            .subscribe(res => {
+                this.paginator = res
+                this.getCurrentPage(this.paginator.next)
+            })
     }
 }

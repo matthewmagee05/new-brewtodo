@@ -1,3 +1,19 @@
+<input
+    class="input"
+    type="text"
+    placeholder="Text input"
+    ngx-google-places-autocomplete
+    (onAddressChange)="handleAddressChange($event)"
+/>
+<!-- <h4>Basic mat-select</h4>
+<mat-form-field>
+    <mat-label>Favorite food</mat-label>
+    <mat-select>
+        <mat-option *ngFor="let food of paginator?.items" [value]="food.name">
+            {{ food.name }}
+        </mat-option>
+    </mat-select>
+</mat-form-field> -->
 <ng-container *ngFor="let brewery of paginator?.items">
     <div class="column is-3 brewery-display">
         <brewtodo-brewery [brew]="brewery"></brewtodo-brewery>
@@ -6,8 +22,17 @@
 <hr />
 <nav class="pagination level" role="navigation" aria-label="pagination">
     <button
+        *ngIf="!breweryService.isLocation"
         class="pagination-previous"
         (click)="getBreweries(paginator.previous)"
+        [disabled]="paginator?.previous.length === 0"
+    >
+        Previous
+    </button>
+    <button
+        *ngIf="breweryService.isLocation"
+        class="pagination-previous"
+        (click)="getBreweriesLocation(paginator.previous)"
         [disabled]="paginator?.previous.length === 0"
     >
         Previous
@@ -16,16 +41,26 @@
         <li>
             <button
                 class="pagination-link"
-                [class.is-current]="number + 1 === currentPage"
-                (click)="getPageByNumber(number + 1)"
+                [class.is-current]="number === currentPage"
+                (click)="getPageByNumber(number)"
+                [disabled]="number === currentPage"
             >
-                {{ number + 1 }}
+                {{ number }}
             </button>
         </li>
     </ul>
     <button
+        *ngIf="!breweryService.isLocation"
         class="pagination-previous"
         (click)="getBreweries(paginator.next)"
+        [disabled]="paginator?.next.length === 0"
+    >
+        Next Page
+    </button>
+    <button
+        *ngIf="breweryService.isLocation"
+        class="pagination-previous"
+        (click)="getBreweriesLocation(paginator.next)"
         [disabled]="paginator?.next.length === 0"
     >
         Next Page

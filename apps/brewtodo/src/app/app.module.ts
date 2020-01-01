@@ -18,8 +18,10 @@ import { BeerComponent } from './Components/beer/beer.component'
 import { ReviewComponent } from './Components/review/review.component'
 import { MapComponent } from './Components/map/map.component'
 import { AgmCoreModule } from '@agm/core'
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { BreweriesSearchComponent } from './Components/breweries-search/breweries-search.component'
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete'
+import { MaterialModule } from './Modules/material/material.module'
 
 @NgModule({
     declarations: [
@@ -48,6 +50,8 @@ import { BreweriesSearchComponent } from './Components/breweries-search/brewerie
             apiKey: 'AIzaSyCPsZmjBdiOTHXKup0Qv8bimAL4N4N_RgE',
         }),
         NgbModule,
+        GooglePlaceModule,
+        MaterialModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

@@ -31,6 +31,27 @@ export class BreweriesController {
         })
     }
 
+    @Post('location')
+    async getByLocation(
+        @Query('page') page: number = 0,
+        @Query('limit') limit: number = 10,
+        @Body('lat') lat: number,
+        @Body('lng') lng: number,
+        @Body('distance') distance: number
+    ) {
+        limit = limit > 100 ? 100 : limit
+        return await this.breweryService.findByFilters(
+            {
+                page,
+                limit,
+                route: 'http://localhost:4200/api/breweries/location/',
+            },
+            lat,
+            lng,
+            distance
+        )
+    }
+
     @Get('featured-breweries')
     async getFeaturedBreweries(): Promise<Breweries[]> {
         return this.breweryService.findFeaturedBreweries()

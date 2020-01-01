@@ -67,9 +67,21 @@ export class Breweries {
     @Column()
     isFeatured: boolean
 
+    @Column('decimal')
+    lat: number
+
+    @Column('decimal')
+    lng: number
+
     @Column('decimal', {
         nullable: true,
         select: false,
     })
     avgReview: number
+
+    @Column('decimal', {
+        nullable: true,
+        select: false,
+    })
+    distance: number
 }

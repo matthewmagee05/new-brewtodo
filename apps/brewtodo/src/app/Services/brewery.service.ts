@@ -8,6 +8,7 @@ import { AuthService } from '../auth/auth.service'
     providedIn: 'root',
 })
 export class BreweryService {
+    public isLocation: boolean = false
     constructor(private http: HttpClient, private auth: AuthService) {}
 
     // creates header
@@ -22,6 +23,7 @@ export class BreweryService {
     public getBreweries(
         url: string = 'http://localhost:4200/api/breweries/?page=1&limit=12'
     ): Observable<Paginator> {
+        this.isLocation = false
         return this.http.get<Paginator>(url)
     }
 
@@ -31,6 +33,21 @@ export class BreweryService {
 
     public getBreweryById(id: number): Observable<Brewery> {
         return this.http.get<Brewery>(`api/breweries/brewery/${id}`)
+    }
+
+    public getBreweryByFilter(
+        lat: number,
+        lng: number,
+        distance: number = 2000,
+        url: string = 'api/breweries/location'
+    ): Observable<Paginator> {
+        const body = {
+            lat,
+            lng,
+            distance,
+        }
+        this.isLocation = true
+        return this.http.post<Paginator>(url, body)
     }
 
     public postItems(brewery: Brewery): Observable<Brewery> {
