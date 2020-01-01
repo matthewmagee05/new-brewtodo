@@ -34,10 +34,12 @@ export class BreweriesController {
     @Post('location')
     async getByLocation(
         @Query('page') page: number = 0,
-        @Query('limit') limit: number = 10,
+        @Query('limit') limit: number = 12,
         @Body('lat') lat: number,
         @Body('lng') lng: number,
-        @Body('distance') distance: number
+        @Body('distance') distance: number,
+        @Body('beerType') beerType: number,
+        @Body('orderByReview') orderByReview: string
     ) {
         limit = limit > 100 ? 100 : limit
         return await this.breweryService.findByFilters(
@@ -48,7 +50,9 @@ export class BreweriesController {
             },
             lat,
             lng,
-            distance
+            distance,
+            beerType,
+            orderByReview
         )
     }
 

@@ -2,7 +2,8 @@
     <div class="card-image ">
         <figure class="image is-4by3 ">
             <img
-                [src]="brewery?.imageURL"
+                *ngIf="brewery"
+                [src]="brewery.imageURL || ''"
                 alt="Placeholder image"
                 onerror="this.onerror=null;this.src='assets/logo.png'"
             />

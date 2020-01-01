@@ -1,41 +1,20 @@
 <div class="row">
     <div class="column is-6">
         <input
+            #filterName
             class="input"
             type="text"
-            placeholder="Text input"
+            placeholder="Enter a location you would like to search..."
             #placesRef="ngx-places"
             ngx-google-places-autocomplete
         />
     </div>
-    <div class="column is-2">
-        <mat-form-field>
-            <mat-label>Distance</mat-label>
-            <mat-select [(value)]="distance">
-                <mat-option [value]="5">
-                    5
-                </mat-option>
-                <mat-option [value]="10">
-                    10
-                </mat-option>
-                <mat-option [value]="25">
-                    25
-                </mat-option>
-                <mat-option [value]="50">
-                    50
-                </mat-option>
-                <mat-option [value]="100">
-                    100
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
+
     <div class="column is-1">
         <button
             mat-raised-button
             color="primary"
             (click)="handleAddressChange($event)"
-            [disabled]="!placesRef.place"
         >
             Search
         </button>
@@ -44,6 +23,56 @@
         <button mat-raised-button color="accent" (click)="resetSearchFields()">
             Reset
         </button>
+    </div>
+</div>
+<div class="row">
+    <div class="column is-2">
+        <mat-form-field>
+            <mat-label>Distance</mat-label>
+            <mat-select [(value)]="distance">
+                <mat-option [value]="5">
+                    5 miles
+                </mat-option>
+                <mat-option [value]="10">
+                    10 miles
+                </mat-option>
+                <mat-option [value]="25">
+                    25 miles
+                </mat-option>
+                <mat-option [value]="50">
+                    50 miles
+                </mat-option>
+                <mat-option [value]="100">
+                    100 miles
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="column is-2">
+        <mat-form-field>
+            <mat-label>Beer Type</mat-label>
+            <mat-select [(value)]="selectedBeerType">
+                <mat-option
+                    *ngFor="let beerType of beerTypes"
+                    [value]="beerType.id"
+                >
+                    {{ beerType?.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="column is-2">
+        <mat-form-field>
+            <mat-label>Reviews</mat-label>
+            <mat-select [(value)]="orderByReviewVal">
+                <mat-option [value]="'DESC'">
+                    Highest First
+                </mat-option>
+                <mat-option [value]="'ASC'">
+                    Lowest First
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
 </div>
 

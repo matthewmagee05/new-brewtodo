@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, ViewChild, ElementRef } from '@angular/core'
 import { BreweryService } from '../../Services/brewery.service'
-import { Brewery, Paginator } from '@brewtodo/api-interfaces'
+import { Brewery, Paginator, BeerType } from '@brewtodo/api-interfaces'
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete'
 
 @Component({
@@ -16,6 +16,9 @@ export class BreweriesSearchComponent implements OnInit {
     lat: number
     lng: number
     distance: number
+    beerTypes: BeerType[]
+    selectedBeerType: number
+    orderByReviewVal: string
     constructor(public breweryService: BreweryService) {}
 
     ngOnInit() {
@@ -26,6 +29,8 @@ export class BreweriesSearchComponent implements OnInit {
             )
             this.getCurrentPage(this.paginator.next)
         })
+
+        this.getBeerTypes()
     }
 
     getBreweries(url: string) {
@@ -79,10 +84,19 @@ export class BreweriesSearchComponent implements OnInit {
     }
 
     public handleAddressChange(address: any) {
-        this.lat = this.placesRef.place.geometry.location.lat()
-        this.lng = this.placesRef.place.geometry.location.lng()
+        if (this.placesRef.place) {
+            this.lat = this.placesRef.place.geometry.location.lat()
+            this.lng = this.placesRef.place.geometry.location.lng()
+        }
+
         this.breweryService
-            .getBreweryByFilter(this.lat, this.lng, this.distance)
+            .getBreweryByFilter(
+                this.lat,
+                this.lng,
+                this.distance,
+                this.selectedBeerType,
+                this.orderByReviewVal
+            )
             .subscribe(res => {
                 this.paginator = res
                 this.pageCount = Array.from(
@@ -94,7 +108,14 @@ export class BreweriesSearchComponent implements OnInit {
 
     getBreweriesLocation(next: string) {
         this.breweryService
-            .getBreweryByFilter(this.lat, this.lng, this.distance, next)
+            .getBreweryByFilter(
+                this.lat,
+                this.lng,
+                this.distance,
+                this.selectedBeerType,
+                this.orderByReviewVal,
+                next
+            )
             .subscribe(res => {
                 this.paginator = res
                 this.getCurrentPage(this.paginator.next)
@@ -103,5 +124,13 @@ export class BreweriesSearchComponent implements OnInit {
 
     resetSearchFields() {
         this.distance = undefined
+        this.selectedBeerType = undefined
+        this.orderByReviewVal = undefined
+    }
+
+    getBeerTypes() {
+        this.breweryService.getBeerTypes().subscribe(res => {
+            this.beerTypes = res
+        })
     }
 }

@@ -2,7 +2,7 @@
     <div class="card-image ">
         <figure class="image is-4by3 ">
             <img
-                [src]="brew.imageURL"
+                [src]="brew.imageURL || ''"
                 alt="Placeholder image"
                 onerror="this.onerror=null;this.src='assets/logo.png'"
             />

@@ -38,13 +38,17 @@ export class BreweryService {
     public getBreweryByFilter(
         lat: number,
         lng: number,
-        distance: number = 2000,
+        distance: number = 10000,
+        beerType: number,
+        orderByReview: string,
         url: string = 'api/breweries/location'
     ): Observable<Paginator> {
         const body = {
             lat,
             lng,
             distance,
+            beerType,
+            orderByReview,
         }
         this.isLocation = true
         return this.http.post<Paginator>(url, body)
@@ -56,5 +60,9 @@ export class BreweryService {
             brewery,
             this._authHeader()
         )
+    }
+
+    public getBeerTypes(): Observable<Brewery[]> {
+        return this.http.get<Brewery[]>('api/beer-types')
     }
 }

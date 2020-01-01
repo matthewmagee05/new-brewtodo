@@ -52,9 +52,14 @@ export class BreweriesService {
         options: IPaginationOptions,
         lat: number = 29.6211025,
         lng = -95.2632201,
-        distance: number = 25
+        distance: number = 10000,
+        beerType: number,
+        orderByReview = 'DESC'
     ): Promise<Pagination<Breweries>> {
-        const queryBuilder = this.breweryRepository.createQueryBuilder(
+        console.log(beerType)
+        const beerTypeSearch =
+            beerType === undefined ? '' : `AND beer.beerType = ${beerType}`
+        let queryBuilder = this.breweryRepository.createQueryBuilder(
             'breweries'
         )
         queryBuilder
@@ -84,8 +89,13 @@ export class BreweriesService {
                 'breweries_avgReview'
             )
             .where(
-                `(3959 * acos(cos(radians(${lat})) * cos(radians(lat)) * cos(radians(lng) - radians(${lng})) + sin(radians(${lat})) * sin(radians(lat )))) < ${distance}`
+                `(3959 * acos(cos(radians(${lat})) * cos(radians(lat)) * cos(radians(lng) - radians(${lng})) + sin(radians(${lat})) * sin(radians(lat )))) < ${distance} ${beerTypeSearch}`
             )
+
+        queryBuilder =
+            orderByReview === 'DESC'
+                ? queryBuilder.orderBy('breweries_avgReview', 'DESC')
+                : queryBuilder.orderBy('breweries_avgReview', 'ASC')
 
         return await paginate<Breweries>(queryBuilder, options)
     }

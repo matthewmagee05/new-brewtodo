@@ -21,6 +21,11 @@ export interface Brewery {
     readonly review: Review[]
 }
 
+export interface BeerType {
+    readonly id: number
+    readonly name: string
+}
+
 export interface Paginator {
     items: Brewery[]
     readonly itemCount: number
