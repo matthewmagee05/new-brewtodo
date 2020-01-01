@@ -1,6 +1,7 @@
-import { Component, OnInit, Output } from '@angular/core'
+import { Component, OnInit, Output, ViewChild, ElementRef } from '@angular/core'
 import { BreweryService } from '../../Services/brewery.service'
 import { Brewery, Paginator } from '@brewtodo/api-interfaces'
+import { GooglePlaceDirective } from 'ngx-google-places-autocomplete'
 
 @Component({
     selector: 'brewtodo-breweries-search',
@@ -9,6 +10,7 @@ import { Brewery, Paginator } from '@brewtodo/api-interfaces'
 })
 export class BreweriesSearchComponent implements OnInit {
     @Output() paginator: Paginator
+    @ViewChild('placesRef', null) placesRef: GooglePlaceDirective
     pageCount: any[]
     currentPage: number
     lat: number
@@ -77,10 +79,10 @@ export class BreweriesSearchComponent implements OnInit {
     }
 
     public handleAddressChange(address: any) {
-        this.lat = address.geometry.location.lat()
-        this.lng = address.geometry.location.lng()
+        this.lat = this.placesRef.place.geometry.location.lat()
+        this.lng = this.placesRef.place.geometry.location.lng()
         this.breweryService
-            .getBreweryByFilter(this.lat, this.lng)
+            .getBreweryByFilter(this.lat, this.lng, this.distance)
             .subscribe(res => {
                 this.paginator = res
                 this.pageCount = Array.from(
@@ -97,5 +99,9 @@ export class BreweriesSearchComponent implements OnInit {
                 this.paginator = res
                 this.getCurrentPage(this.paginator.next)
             })
+    }
+
+    resetSearchFields() {
+        this.distance = undefined
     }
 }
