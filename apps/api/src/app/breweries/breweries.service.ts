@@ -173,6 +173,11 @@ export class BreweriesService {
                 'beer.breweryId =  breweries.id'
             )
             .leftJoinAndSelect(
+                'beer.beerType',
+                'beerType',
+                'beerType.id = beer.beerType'
+            )
+            .leftJoinAndSelect(
                 'breweries.state',
                 'state',
                 'state.id =  breweries.state'

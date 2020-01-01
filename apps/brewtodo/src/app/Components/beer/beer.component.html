@@ -10,6 +10,7 @@
                     <th><abbr title="BeerName">Beer Name</abbr></th>
                     <th><abbr title="ABV">ABV</abbr></th>
                     <th><abbr title="Description">Description</abbr></th>
+                    <th><abbr title="Beer Type">Beer Type</abbr></th>
                 </tr>
             </thead>
             <tbody>
@@ -20,6 +21,9 @@
                     <td>{{ beer?.abv }}%</td>
                     <td>
                         {{ beer?.description }}
+                    </td>
+                    <td>
+                        {{ beer?.beerType.name }}
                     </td>
                 </tr>
             </tbody>
