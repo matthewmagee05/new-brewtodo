@@ -46,20 +46,16 @@ export class BreweriesSearchComponent implements OnInit, OnDestroy {
                     this.getCurrentPage(this.paginator.next)
                 })
             })
-        if (
-            this.authService.isAuthenticated() &&
-            this.authService.currentUserId
-        ) {
-            this.subscription = this.breweryService
-                .getBreweries()
-                .subscribe(res => {
-                    this.paginator = res
-                    this.pageCount = Array.from(
-                        Array(this.paginator.pageCount)
-                    ).map((x, i) => i + 1)
-                    this.getCurrentPage(this.paginator.next)
-                })
-        }
+
+        this.subscription = this.breweryService
+            .getBreweries()
+            .subscribe(res => {
+                this.paginator = res
+                this.pageCount = Array.from(
+                    Array(this.paginator.pageCount)
+                ).map((x, i) => i + 1)
+                this.getCurrentPage(this.paginator.next)
+            })
 
         this.getBeerTypes()
     }

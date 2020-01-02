@@ -26,14 +26,9 @@ export class FeaturedBreweriesComponent implements OnInit, OnDestroy {
                     .subscribe(breweries => (this.breweries = breweries))
             })
 
-        if (
-            this.authService.isAuthenticated() &&
-            this.authService.currentUserId
-        ) {
-            this.breweryService
-                .getFeaturedBreweries()
-                .subscribe(breweries => (this.breweries = breweries))
-        }
+        this.subscription = this.breweryService
+            .getFeaturedBreweries()
+            .subscribe(breweries => (this.breweries = breweries))
     }
 
     ngOnDestroy() {
