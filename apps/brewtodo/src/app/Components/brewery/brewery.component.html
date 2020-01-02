@@ -73,23 +73,13 @@
         <div class="content description">
             {{ brew.description }}
         </div>
-        <div>
-            <span
-                *ngFor="
-                    let dummy of ' '.repeat(brew.avgReview).split('');
-                    let x = index
-                "
-                class="fa fa-star checked"
-            ></span>
-            <span
-                *ngFor="
-                    let dummy of ' '.repeat(10 - brew.avgReview).split('');
-                    let x = index
-                "
-                class="fa fa-star"
-            ></span>
-            {{ brew?.avgReview }} / 10
-        </div>
+        <ngx-stars
+            [readonly]="true"
+            [initialStars]="brew?.avgReview"
+            [maxStars]="10"
+            [color]="'dodgerblue'"
+            [size]="1"
+        ></ngx-stars>
     </div>
     <footer class="card-footer card-color">
         <a

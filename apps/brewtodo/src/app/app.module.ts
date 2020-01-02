@@ -22,6 +22,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { BreweriesSearchComponent } from './Components/breweries-search/breweries-search.component'
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete'
 import { MaterialModule } from './Modules/material/material.module'
+import { NgxStarsModule } from 'ngx-stars'
 
 @NgModule({
     declarations: [
@@ -52,6 +53,7 @@ import { MaterialModule } from './Modules/material/material.module'
         NgbModule,
         GooglePlaceModule,
         MaterialModule,
+        NgxStarsModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

@@ -62,6 +62,10 @@
     position: relative;
 }
 
+.like-button:focus {
+    outline: 0;
+}
+
 .img-bools {
     width: 22%;
 }
