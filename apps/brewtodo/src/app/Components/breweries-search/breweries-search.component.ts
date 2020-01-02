@@ -1,14 +1,23 @@
-import { Component, OnInit, Output, ViewChild, ElementRef } from '@angular/core'
+import {
+    Component,
+    OnInit,
+    Output,
+    ViewChild,
+    ElementRef,
+    OnDestroy,
+} from '@angular/core'
 import { BreweryService } from '../../Services/brewery.service'
 import { Brewery, Paginator, BeerType } from '@brewtodo/api-interfaces'
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete'
+import { AuthService } from '../../auth/auth.service'
+import { Subscription } from 'rxjs'
 
 @Component({
     selector: 'brewtodo-breweries-search',
     templateUrl: './breweries-search.component.html',
     styleUrls: ['./breweries-search.component.css'],
 })
-export class BreweriesSearchComponent implements OnInit {
+export class BreweriesSearchComponent implements OnInit, OnDestroy {
     @Output() paginator: Paginator
     @ViewChild('placesRef', null) placesRef: GooglePlaceDirective
     pageCount: any[]
@@ -19,18 +28,45 @@ export class BreweriesSearchComponent implements OnInit {
     beerTypes: BeerType[]
     selectedBeerType: number
     orderByReviewVal: string
-    constructor(public breweryService: BreweryService) {}
+    subscription: Subscription
+    constructor(
+        public breweryService: BreweryService,
+        private authService: AuthService
+    ) {}
 
     ngOnInit() {
-        this.breweryService.getBreweries().subscribe(res => {
-            this.paginator = res
-            this.pageCount = Array.from(Array(this.paginator.pageCount)).map(
-                (x, i) => i + 1
-            )
-            this.getCurrentPage(this.paginator.next)
-        })
+        this.subscription = this.authService
+            .sendNotificationOfAuth()
+            .subscribe(res => {
+                this.breweryService.getBreweries().subscribe(res => {
+                    this.paginator = res
+                    this.pageCount = Array.from(
+                        Array(this.paginator.pageCount)
+                    ).map((x, i) => i + 1)
+                    this.getCurrentPage(this.paginator.next)
+                })
+            })
+        if (
+            this.authService.isAuthenticated() &&
+            this.authService.currentUserId
+        ) {
+            this.subscription = this.breweryService
+                .getBreweries()
+                .subscribe(res => {
+                    this.paginator = res
+                    this.pageCount = Array.from(
+                        Array(this.paginator.pageCount)
+                    ).map((x, i) => i + 1)
+                    this.getCurrentPage(this.paginator.next)
+                })
+        }
 
         this.getBeerTypes()
+    }
+
+    ngOnDestroy() {
+        // unsubscribe to ensure no memory leaks
+        this.subscription.unsubscribe()
     }
 
     getBreweries(url: string) {

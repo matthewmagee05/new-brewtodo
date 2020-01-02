@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { Observable } from 'rxjs'
+import { Observable, Subject } from 'rxjs'
 import { Brewery, Paginator } from '@brewtodo/api-interfaces'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { AuthService } from '../auth/auth.service'
@@ -23,12 +23,21 @@ export class BreweryService {
     public getBreweries(
         url: string = 'http://localhost:4200/api/breweries/?page=1&limit=12'
     ): Observable<Paginator> {
+        const currentUserId = this.auth.currentUserId
+        if (currentUserId) {
+            url = url + `&userId=${currentUserId}`
+        }
         this.isLocation = false
         return this.http.get<Paginator>(url)
     }
 
     public getFeaturedBreweries(): Observable<Brewery[]> {
-        return this.http.get<Brewery[]>('api/breweries/featured-breweries')
+        let url = 'api/breweries/featured-breweries'
+        const currentUserId = this.auth.currentUserId
+        if (currentUserId) {
+            url = url + `?userId=${currentUserId}`
+        }
+        return this.http.get<Brewery[]>(url)
     }
 
     public getBreweryById(id: number): Observable<Brewery> {
@@ -43,6 +52,14 @@ export class BreweryService {
         orderByReview: string,
         url: string = 'api/breweries/location'
     ): Observable<Paginator> {
+        const currentUserId = this.auth.currentUserId
+        if (currentUserId) {
+            if (url.includes('&')) {
+                url = url + `&userId=${currentUserId}`
+            } else {
+                url = url + `?userId=${currentUserId}`
+            }
+        }
         const body = {
             lat,
             lng,
@@ -58,6 +75,30 @@ export class BreweryService {
         return this.http.post<Brewery>(
             '/api/breweries',
             brewery,
+            this._authHeader()
+        )
+    }
+
+    public postFavoriteBreweries(breweryId: number): Observable<boolean> {
+        const body = {
+            userId: this.auth.currentUserId,
+            breweryId,
+        }
+        return this.http.post<boolean>(
+            '/api/user-favorite-breweries',
+            body,
+            this._authHeader()
+        )
+    }
+
+    public deleteFavoriteBreweries(breweryId: number): Observable<boolean> {
+        const body = {
+            userId: this.auth.currentUserId,
+            breweryId,
+        }
+        return this.http.post<boolean>(
+            '/api/user-favorite-breweries/delete',
+            body,
             this._authHeader()
         )
     }

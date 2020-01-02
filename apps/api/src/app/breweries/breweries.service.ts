@@ -7,6 +7,7 @@ import {
     IPaginationOptions,
     Pagination,
 } from 'nestjs-typeorm-paginate'
+import { UserFavoriteBreweries } from '../user-favorite-breweries/user-favorite-breweries.entity'
 
 @Injectable()
 export class BreweriesService {
@@ -16,7 +17,8 @@ export class BreweriesService {
     ) {}
 
     async paginate(
-        options: IPaginationOptions
+        options: IPaginationOptions,
+        userId: number = undefined
     ): Promise<Pagination<Breweries>> {
         const queryBuilder = this.breweryRepository.createQueryBuilder(
             'breweries'
@@ -45,6 +47,15 @@ export class BreweriesService {
                 'breweries_avgReview'
             )
 
+        if (userId) {
+            queryBuilder.leftJoinAndMapOne(
+                'breweries.userFavoriteBreweries',
+                UserFavoriteBreweries,
+                'ufb',
+                'breweries.id = ufb.breweryId'
+            )
+        }
+
         return await paginate<Breweries>(queryBuilder, options)
     }
 
@@ -54,9 +65,9 @@ export class BreweriesService {
         lng = -95.2632201,
         distance: number = 10000,
         beerType: number,
-        orderByReview = 'DESC'
+        orderByReview = 'DESC',
+        userId = undefined
     ): Promise<Pagination<Breweries>> {
-        console.log(beerType)
         const beerTypeSearch =
             beerType === undefined ? '' : `AND beer.beerType = ${beerType}`
         let queryBuilder = this.breweryRepository.createQueryBuilder(
@@ -88,9 +99,18 @@ export class BreweriesService {
                 '(SELECT ROUND( AVG(review.rating),1 ) FROM review WHERE review.breweryId = breweries.id)',
                 'breweries_avgReview'
             )
-            .where(
-                `(3959 * acos(cos(radians(${lat})) * cos(radians(lat)) * cos(radians(lng) - radians(${lng})) + sin(radians(${lat})) * sin(radians(lat )))) < ${distance} ${beerTypeSearch}`
+
+        if (userId) {
+            queryBuilder.leftJoinAndMapOne(
+                'breweries.userFavoriteBreweries',
+                UserFavoriteBreweries,
+                'ufb',
+                'breweries.id = ufb.breweryId'
             )
+        }
+        queryBuilder.where(
+            `(3959 * acos(cos(radians(${lat})) * cos(radians(lat)) * cos(radians(lng) - radians(${lng})) + sin(radians(${lat})) * sin(radians(lat )))) < ${distance} ${beerTypeSearch}`
+        )
 
         queryBuilder =
             orderByReview === 'DESC'
@@ -128,8 +148,10 @@ export class BreweriesService {
             .getMany()
     }
 
-    async findFeaturedBreweries(): Promise<Partial<Breweries[]>> {
-        return await this.breweryRepository
+    async findFeaturedBreweries(
+        userId: number = undefined
+    ): Promise<Partial<Breweries[]>> {
+        let queryBuilder = this.breweryRepository
             .createQueryBuilder('breweries')
             .select()
 
@@ -153,8 +175,17 @@ export class BreweriesService {
                 '(SELECT ROUND( AVG(review.rating),1 ) FROM review WHERE review.breweryId = breweries.id)',
                 'breweries_avgReview'
             )
-            .where('breweries.isFeatured = true')
-            .getMany()
+
+        if (userId) {
+            queryBuilder.leftJoinAndMapOne(
+                'breweries.userFavoriteBreweries',
+                UserFavoriteBreweries,
+                'ufb',
+                'breweries.id = ufb.breweryId'
+            )
+        }
+        queryBuilder.where('breweries.isFeatured = true')
+        return await queryBuilder.getMany()
     }
 
     async getBreweryById(breweryId: number): Promise<Breweries> {

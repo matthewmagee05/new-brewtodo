@@ -13,6 +13,7 @@ import { State } from '@brewtodo/api-interfaces'
 import { States } from '../states/state.entity'
 import { Beer } from '../beer/beer.entity'
 import { Review } from '../review/review.entity'
+import { UserFavoriteBreweries } from '../user-favorite-breweries/user-favorite-breweries.entity'
 
 @Entity()
 export class Breweries {
@@ -84,4 +85,6 @@ export class Breweries {
         select: false,
     })
     distance: number
+
+    userFavoriteBreweries: UserFavoriteBreweries
 }

@@ -6,5 +6,6 @@ export const constants = {
     userRepository: 'USER_REPOSITORY',
     reviewRepository: 'REVIEW_REPOSITORY',
     userBeerRepository: 'USERBEER_REPOSITORY',
-    userPurchasedItemRepository: 'USERPURCHASEDITEM_REPOSITORY'
+    userPurchasedItemRepository: 'USERPURCHASEDITEM_REPOSITORY',
+    userFavoriteBreweryReposiotry: 'USERFAVORITEBREWERY_REPOSITORY',
 }

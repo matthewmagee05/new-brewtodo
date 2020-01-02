@@ -21,20 +21,25 @@ export class BreweriesController {
     @Get('')
     async index(
         @Query('page') page: number = 0,
-        @Query('limit') limit: number = 10
+        @Query('limit') limit: number = 10,
+        @Query('userId') userId: number
     ) {
         limit = limit > 100 ? 100 : limit
-        return await this.breweryService.paginate({
-            page,
-            limit,
-            route: 'http://localhost:4200/api/breweries/',
-        })
+        return await this.breweryService.paginate(
+            {
+                page,
+                limit,
+                route: 'http://localhost:4200/api/breweries/',
+            },
+            userId
+        )
     }
 
     @Post('location')
     async getByLocation(
         @Query('page') page: number = 0,
         @Query('limit') limit: number = 12,
+        @Query('userId') userId: number,
         @Body('lat') lat: number,
         @Body('lng') lng: number,
         @Body('distance') distance: number,
@@ -52,13 +57,16 @@ export class BreweriesController {
             lng,
             distance,
             beerType,
-            orderByReview
+            orderByReview,
+            userId
         )
     }
 
     @Get('featured-breweries')
-    async getFeaturedBreweries(): Promise<Breweries[]> {
-        return this.breweryService.findFeaturedBreweries()
+    async getFeaturedBreweries(
+        @Query('userId') userId: number
+    ): Promise<Breweries[]> {
+        return this.breweryService.findFeaturedBreweries(userId)
     }
 
     @Get('brewery/:breweryId')

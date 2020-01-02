@@ -11,6 +11,27 @@
                     {{ brew?.distance?.toFixed(1) }} miles
                 </p>
             </div>
+            <div class="like-button-wrapper" *ngIf="isAuthenticated()">
+                <button
+                    class="like-button"
+                    mat-icon-button
+                    color="warn"
+                    aria-label="like button"
+                    (click)="handleLiked(brew.id)"
+                >
+                    <mat-icon
+                        *ngIf="brew?.userFavoriteBreweries?.userId && isLiked"
+                        >favorite</mat-icon
+                    >
+                    <mat-icon
+                        *ngIf="
+                            brew.userFavoriteBreweries == null &&
+                            isLiked === false
+                        "
+                        >favorite_outline</mat-icon
+                    >
+                </button>
+            </div>
         </figure>
         <div class="ribbon-wrapper">
             <div class="ribbon">{{ brew.name }}</div>

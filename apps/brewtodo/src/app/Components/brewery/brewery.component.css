@@ -47,6 +47,21 @@
     text-align: center;
 }
 
+.like-button-wrapper {
+    width: 20px;
+    height: 10px;
+    position: absolute;
+    top: 0px;
+    right: 1px;
+    z-index: 2;
+}
+
+.like-button {
+    top: 0px;
+    right: 10px;
+    position: relative;
+}
+
 .img-bools {
     width: 22%;
 }

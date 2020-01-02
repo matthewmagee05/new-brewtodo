@@ -17,6 +17,7 @@ export interface Brewery {
     readonly hasGrowler: boolean
     readonly hasFood: boolean
     avgReview: number
+    userFavoriteBreweries: UserFavoriteBreweries
     readonly beer: Beer[]
     readonly review: Review[]
     readonly distance: number
@@ -25,6 +26,24 @@ export interface Brewery {
 export interface BeerType {
     readonly id: number
     readonly name: string
+}
+
+export interface IUserFavoriteBreweries {
+    readonly id: number
+    userId: number
+    breweryId: number
+}
+
+export class UserFavoriteBreweries {
+    id: number
+    userId: number
+    breweryId: number
+
+    constructor(id?: number, userId?: number, breweryId?: number) {
+        this.id = id
+        this.userId = userId
+        this.breweryId = breweryId
+    }
 }
 
 export interface Paginator {

@@ -7,6 +7,7 @@ import { User } from '../app/user/user.entity'
 import { Review } from '../app/review/review.entity'
 import { UserBeers } from '../app/user-beer/user-beer.entity'
 import { UserPurchasedItems } from '../app/user-purchased-items/user-purchased-item.entity'
+import { UserFavoriteBreweries } from '../app/user-favorite-breweries/user-favorite-breweries.entity'
 
 export const databaseProviders = [
     {
@@ -29,6 +30,7 @@ export const databaseProviders = [
                     Review,
                     UserBeers,
                     UserPurchasedItems,
+                    UserFavoriteBreweries,
                 ],
                 database: process.env.TYPEORM_DATABASE,
             }),
