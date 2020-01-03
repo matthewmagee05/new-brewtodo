@@ -3,14 +3,14 @@
     "name": "brewtodo-api",
     "builds": [
         {
-            "src": "apps/api/dist/main.js",
+            "src": "brewtodo/apps/api/dist/main.js",
             "use": "@now/node"
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "apps/api/dist/main.js"
+            "dest": "brewtodo/apps/api/dist/main.js"
         }
     ]
 }
