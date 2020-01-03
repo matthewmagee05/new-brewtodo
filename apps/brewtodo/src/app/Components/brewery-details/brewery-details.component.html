@@ -59,22 +59,13 @@
             <p><b>About Us</b></p>
             {{ brewery?.description }}
         </div>
-        <div>
-            <span
-                *ngFor="
-                    let dummy of ' '.repeat(brewery?.avgReview).split('');
-                    let x = index
-                "
-                class="fa fa-star checked"
-            ></span>
-            <span
-                *ngFor="
-                    let dummy of ' '.repeat(10 - brewery?.avgReview).split('');
-                    let x = index
-                "
-                class="fa fa-star"
-            ></span>
-            {{ brewery?.avgReview }} / 10
-        </div>
+        <ngx-stars
+            *ngIf="brewery"
+            [readonly]="true"
+            [initialStars]="brewery?.avgReview"
+            [maxStars]="10"
+            [color]="'dodgerblue'"
+            [size]="1"
+        ></ngx-stars>
     </div>
 </div>

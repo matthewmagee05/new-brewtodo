@@ -8,4 +8,5 @@ export const constants = {
     userBeerRepository: 'USERBEER_REPOSITORY',
     userPurchasedItemRepository: 'USERPURCHASEDITEM_REPOSITORY',
     userFavoriteBreweryReposiotry: 'USERFAVORITEBREWERY_REPOSITORY',
+    userVisitedBreweryReposiotry: 'USERVISITEDBREWERY_REPOSITORY',
 }

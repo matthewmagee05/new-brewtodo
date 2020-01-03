@@ -103,6 +103,30 @@ export class BreweryService {
         )
     }
 
+    public postVisitedBreweries(breweryId: number): Observable<boolean> {
+        const body = {
+            userId: this.auth.currentUserId,
+            breweryId,
+        }
+        return this.http.post<boolean>(
+            '/api/user-visited-breweries',
+            body,
+            this._authHeader()
+        )
+    }
+
+    public deleteVisitedBreweries(breweryId: number): Observable<boolean> {
+        const body = {
+            userId: this.auth.currentUserId,
+            breweryId,
+        }
+        return this.http.post<boolean>(
+            '/api/user-visited-breweries/delete',
+            body,
+            this._authHeader()
+        )
+    }
+
     public getBeerTypes(): Observable<Brewery[]> {
         return this.http.get<Brewery[]>('api/beer-types')
     }

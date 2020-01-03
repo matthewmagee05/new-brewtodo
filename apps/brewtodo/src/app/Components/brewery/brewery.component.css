@@ -62,7 +62,26 @@
     position: relative;
 }
 
+.visited-button-wrapper {
+    width: 20px;
+    height: 10px;
+    position: absolute;
+    right: 0px;
+    bottom: 1px;
+    z-index: 2;
+}
+
+.visited-button {
+    right: 10px;
+    bottom: 10px;
+    position: relative;
+}
+
 .like-button:focus {
+    outline: 0;
+}
+
+.visited-button:focus {
     outline: 0;
 }
 

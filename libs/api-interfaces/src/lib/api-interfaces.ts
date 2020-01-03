@@ -18,6 +18,7 @@ export interface Brewery {
     readonly hasFood: boolean
     avgReview: number
     userFavoriteBreweries: UserFavoriteBreweries
+    userVisitedBreweries: UserVisitedBreweries
     readonly beer: Beer[]
     readonly review: Review[]
     readonly distance: number
@@ -35,6 +36,18 @@ export interface IUserFavoriteBreweries {
 }
 
 export class UserFavoriteBreweries {
+    id: number
+    userId: number
+    breweryId: number
+
+    constructor(id?: number, userId?: number, breweryId?: number) {
+        this.id = id
+        this.userId = userId
+        this.breweryId = breweryId
+    }
+}
+
+export class UserVisitedBreweries {
     id: number
     userId: number
     breweryId: number

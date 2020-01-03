@@ -56,3 +56,7 @@ h4 {
 .templates {
     display: inline-block;
 }
+
+ngb-carousel:focus {
+    outline: 0;
+}

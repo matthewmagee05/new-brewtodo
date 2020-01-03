@@ -14,6 +14,7 @@ import { States } from '../states/state.entity'
 import { Beer } from '../beer/beer.entity'
 import { Review } from '../review/review.entity'
 import { UserFavoriteBreweries } from '../user-favorite-breweries/user-favorite-breweries.entity'
+import { UserVisitedBreweries } from '../user-visited-breweries/user-visited-breweries.entity'
 
 @Entity()
 export class Breweries {
@@ -87,4 +88,5 @@ export class Breweries {
     distance: number
 
     userFavoriteBreweries: UserFavoriteBreweries
+    UserVisitedBreweries: UserVisitedBreweries
 }

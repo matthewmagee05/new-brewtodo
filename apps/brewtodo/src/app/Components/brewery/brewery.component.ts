@@ -1,5 +1,9 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core'
-import { Brewery, UserFavoriteBreweries } from '@brewtodo/api-interfaces'
+import {
+    Brewery,
+    UserFavoriteBreweries,
+    UserVisitedBreweries,
+} from '@brewtodo/api-interfaces'
 import { BreweryService } from '../../Services/brewery.service'
 import { AuthService } from '../../auth/auth.service'
 
@@ -11,6 +15,7 @@ import { AuthService } from '../../auth/auth.service'
 export class BreweryComponent implements OnInit, OnChanges {
     @Input() brew: Brewery
     isLiked: boolean = false
+    isVisited: boolean = false
 
     constructor(
         private breweryService: BreweryService,
@@ -23,6 +28,9 @@ export class BreweryComponent implements OnInit, OnChanges {
         if (this.brew.userFavoriteBreweries !== null) {
             this.isLiked = true
         }
+        if (this.brew.userVisitedBreweries !== null) {
+            this.isVisited = true
+        }
     }
 
     handleLiked(breweryId: number) {
@@ -31,6 +39,22 @@ export class BreweryComponent implements OnInit, OnChanges {
         this.isLiked === true
             ? this.postFavoriteBreweries(breweryId)
             : this.deleteFavoriteBrewery(breweryId)
+    }
+
+    handleVisited(breweryId: number) {
+        this.isVisited = !this.isVisited
+
+        this.isVisited === true
+            ? this.postVisitedBreweries(breweryId)
+            : this.deleteVisitedBrewery(breweryId)
+    }
+
+    postVisitedBreweries(breweryId: number) {
+        this.brew.userVisitedBreweries = new UserVisitedBreweries(
+            null,
+            this.authService.currentUserId
+        )
+        this.breweryService.postVisitedBreweries(breweryId).subscribe()
     }
 
     postFavoriteBreweries(breweryId: number) {
@@ -44,6 +68,11 @@ export class BreweryComponent implements OnInit, OnChanges {
     deleteFavoriteBrewery(breweryId: number) {
         this.brew.userFavoriteBreweries = null
         this.breweryService.deleteFavoriteBreweries(breweryId).subscribe()
+    }
+
+    deleteVisitedBrewery(breweryId: number) {
+        this.brew.userVisitedBreweries = null
+        this.breweryService.deleteVisitedBreweries(breweryId).subscribe()
     }
 
     isAuthenticated() {

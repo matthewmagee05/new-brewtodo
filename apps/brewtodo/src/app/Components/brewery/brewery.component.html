@@ -20,15 +20,41 @@
                     (click)="handleLiked(brew.id)"
                 >
                     <mat-icon
+                        matTooltip="Remove from favorite Breweries"
                         *ngIf="brew?.userFavoriteBreweries?.userId && isLiked"
                         >favorite</mat-icon
                     >
                     <mat-icon
+                        matTooltip="Add to favorite Breweries"
                         *ngIf="
                             brew.userFavoriteBreweries == null &&
                             isLiked === false
                         "
                         >favorite_outline</mat-icon
+                    >
+                </button>
+            </div>
+            <div class="visited-button-wrapper" *ngIf="isAuthenticated()">
+                <button
+                    class="visited-button"
+                    mat-icon-button
+                    aria-label="visited button"
+                    (click)="handleVisited(brew.id)"
+                >
+                    <mat-icon
+                        matTooltip="Remove from visited Breweries"
+                        color="warn"
+                        *ngIf="brew?.userVisitedBreweries?.userId && isVisited"
+                        >remove_circle</mat-icon
+                    >
+                    <mat-icon
+                        [ngStyle]="{ color: '#5cb85c' }"
+                        matTooltip="Add to visited Breweries"
+                        *ngIf="
+                            brew.userVisitedBreweries == null &&
+                            isVisited === false
+                        "
+                        >add_circle</mat-icon
                     >
                 </button>
             </div>
